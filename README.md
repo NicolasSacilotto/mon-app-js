@@ -6,11 +6,10 @@ tp node/jenkins, j'ai installé le plugin nodeJS
 
 pour faire fonctionner la pipeline : 
 
-Voici les étapes que j’ai suivies pour que le pipeline Jenkins Node.js fonctionne :
+Exercice 1 : Premier déploiement
+Pour ce TP, j’ai configuré un environnement sur l’IDE VS Code, qui pointe vers le répertoire de mon conteneur Docker où Jenkins est installé et configuré. J’ai également installé le plugin NodeJS pour Jenkins.
 
-J’ai installé Node.js 18 et npm dans mon conteneur Ubuntu avec :
-J’ai installé les dépendances du projet avec :
-J’ai ajouté le reporter JUnit pour Jest dans mon package.json :
-J’ai installé le reporter avec :
-J’ai adapté mon Jenkinsfile pour que Jenkins récupère le rapport de test généré par Jest :
-J’ai vérifié que le fichier test-results.xml est bien généré après les tests.
+Pour faire fonctionner la pipeline Node.js avec Jenkins, j’ai procédé ainsi :
+J’ai installé Node.js 18 et npm dans le conteneur Ubuntu. Ensuite, j’ai installé les dépendances du projet avec la commande appropriée. J’ai ajouté le reporter JUnit pour Jest dans le fichier package.json, puis j’ai installé ce reporter. J’ai modifié le Jenkinsfile afin que Jenkins puisse récupérer le rapport de test généré par Jest. Enfin, j’ai vérifié que le fichier test-results.xml est bien créé après l’exécution des tests.
+
+2. Exercice 2 : Gestion des branches
