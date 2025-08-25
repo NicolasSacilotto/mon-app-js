@@ -1,0 +1,60 @@
+2025-08-25 11:39:43.288 [info] Extension host with pid 1722 started
+2025-08-25 11:39:43.386 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onLanguage'
+2025-08-25 11:39:43.387 [info] ExtensionService#_doActivateExtension GitHub.copilot-chat, startup: false, activationEvent: 'onChatParticipant:github.copilot.editsAgent'
+2025-08-25 11:39:43.827 [error] PendingMigrationError: navigator is now a global in nodejs, please see https://aka.ms/vscode-extensions/navigator for additional info on this error.
+    at get (file:///root/.vscode-server/bin/6f17636121051a53c88d3e605c491d22af2ba755/out/vs/workbench/api/node/extensionHostProcess.js:388:6355)
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:342:48517
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:342:50910
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:342:51981
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:342:54167
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:349:2591
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:350:2671
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:350:9338
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:352:21442
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:352:25509
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:352:27007
+    at /root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:1:262
+    at Object.<anonymous> (/root/.vscode-server/extensions/github.copilot-chat-0.30.3/dist/extension.js:2479:4548)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1282:12)
+    at e._load (file:///root/.vscode-server/bin/6f17636121051a53c88d3e605c491d22af2ba755/out/vs/workbench/api/node/extensionHostProcess.js:388:5728)
+    at t._load (file:///root/.vscode-server/bin/6f17636121051a53c88d3e605c491d22af2ba755/out/vs/workbench/api/node/extensionHostProcess.js:206:22695)
+    at r._load (file:///root/.vscode-server/bin/6f17636121051a53c88d3e605c491d22af2ba755/out/vs/workbench/api/node/extensionHostProcess.js:198:25694)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1487:12)
+    at require (node:internal/modules/helpers:135:16)
+    at LZ.Cb (file:///root/.vscode-server/bin/6f17636121051a53c88d3e605c491d22af2ba755/out/vs/workbench/api/node/extensionHostProcess.js:237:1253)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-08-25 11:39:43.860 [info] Lock '/root/.vscode-server/data/User/workspaceStorage/993735812681f6c2a680806e12338e43/vscode.lock': Lock acquired.
+2025-08-25 11:39:43.902 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: false, activationEvent: 'api', root cause: GitHub.copilot-chat
+2025-08-25 11:39:43.963 [info] ExtensionService#_doActivateExtension vscode.git, startup: false, activationEvent: 'api', root cause: GitHub.copilot-chat
+2025-08-25 11:39:44.390 [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+2025-08-25 11:39:44.456 [info] Eager extensions activated
+2025-08-25 11:39:44.456 [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: false, activationEvent: 'onStartupFinished'
+2025-08-25 11:39:44.456 [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+2025-08-25 11:39:44.457 [info] ExtensionService#_doActivateExtension GitHub.copilot, startup: false, activationEvent: 'onStartupFinished'
+2025-08-25 11:44:10.868 [info] ExtensionService#_doActivateExtension vscode.html-language-features, startup: false, activationEvent: 'onLanguage:html'
+2025-08-25 11:44:15.539 [info] ExtensionService#_doActivateExtension vscode.typescript-language-features, startup: false, activationEvent: 'onLanguage:javascript'
+2025-08-25 11:44:28.684 [info] ExtensionService#_doActivateExtension vscode.css-language-features, startup: false, activationEvent: 'onLanguage:css'
+2025-08-25 11:44:52.799 [info] ExtensionService#_doActivateExtension vscode.configuration-editing, startup: false, activationEvent: 'onLanguage:json'
+2025-08-25 11:44:52.800 [info] ExtensionService#_doActivateExtension vscode.extension-editing, startup: false, activationEvent: 'onLanguage:json'
+2025-08-25 11:44:52.800 [info] ExtensionService#_doActivateExtension vscode.json-language-features, startup: false, activationEvent: 'onLanguage:json'
+2025-08-25 11:44:52.800 [info] ExtensionService#_doActivateExtension vscode.npm, startup: false, activationEvent: 'onLanguage:json'
+2025-08-25 11:45:08.593 [info] ExtensionService#_doActivateExtension vscode.markdown-language-features, startup: false, activationEvent: 'onLanguage:markdown'
+2025-08-25 11:45:08.854 [info] ExtensionService#_doActivateExtension vscode.markdown-math, startup: false, activationEvent: 'api', root cause: vscode.markdown-language-features
+2025-08-25 12:03:37.848 [info] ExtensionService#_doActivateExtension vscode.terminal-suggest, startup: false, activationEvent: 'onTerminalShellIntegration:*'
+2025-08-25 12:10:09.430 [info] Extension host terminating: received terminate message from renderer
+2025-08-25 12:10:09.430 [info] Lock '/root/.vscode-server/data/User/workspaceStorage/993735812681f6c2a680806e12338e43/vscode.lock': Marking the lockfile as scheduled to be released in 6000 ms.
+2025-08-25 12:10:09.519 [info] Extension host with pid 1722 exiting with code 0

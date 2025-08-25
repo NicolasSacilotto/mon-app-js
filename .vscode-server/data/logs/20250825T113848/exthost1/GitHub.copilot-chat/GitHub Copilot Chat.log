@@ -1,0 +1,17 @@
+2025-08-25 11:38:55.805 [info] [GitExtensionServiceImpl] Initializing Git extension service.
+2025-08-25 11:38:55.805 [info] Can't use the Electron fetcher in this environment.
+2025-08-25 11:38:55.805 [info] Using the Node fetch fetcher.
+2025-08-25 11:38:55.805 [info] [GitExtensionServiceImpl] Successfully activated the vscode.git extension.
+2025-08-25 11:38:55.805 [info] [GitExtensionServiceImpl] Enablement state of the vscode.git extension: true.
+2025-08-25 11:38:55.805 [info] [GitExtensionServiceImpl] Successfully registered Git commit message provider.
+2025-08-25 11:38:56.056 [error] Copilot extension not found
+2025-08-25 11:38:56.056 [warning] Copilot API is undefined, unable to register context provider.
+2025-08-25 11:38:56.274 [info] Logged in as EternalNico
+2025-08-25 11:39:00.650 [info] Got Copilot token for EternalNico
+2025-08-25 11:39:00.658 [info] activationBlocker from 'languageModelAccess' took for 4612ms
+2025-08-25 11:39:01.068 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-08-25 11:39:01.068 [info] GitHub.vscode-pull-request-github extension is not yet activated.
+2025-08-25 11:39:01.093 [info] Registering default platform agent...
+2025-08-25 11:39:01.094 [info] activationBlocker from 'conversationFeature' took for 5052ms
+2025-08-25 11:39:01.448 [info] Fetched model metadata in 790ms d39ee446-9518-4f1f-b165-eea4b4a86324
+2025-08-25 11:39:01.807 [info] BYOK: Copilot Chat known models list fetched successfully.

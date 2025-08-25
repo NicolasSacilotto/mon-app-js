@@ -1,0 +1,38 @@
+2025-08-25 11:38:48.539 [info] 
+
+
+
+
+2025-08-25 11:38:48.563 [info] Extension host agent started.
+2025-08-25 11:38:48.621 [debug] No extensions are marked as removed.
+2025-08-25 11:38:48.623 [info] Started initializing default profile extensions in extensions installation folder. file:///root/.vscode-server/extensions
+2025-08-25 11:38:48.654 [debug] ComputeTargetPlatform: linux-x64
+2025-08-25 11:38:48.666 [info] Completed initializing default profile extensions in extensions installation folder. file:///root/.vscode-server/extensions
+2025-08-25 11:38:48.725 [info] [127.0.0.1][7f1d9888][ManagementConnection] New connection established.
+2025-08-25 11:38:48.751 [info] Log level changed to info
+2025-08-25 11:38:49.021 [info] [127.0.0.1][6d46d583][ExtensionHostConnection] New connection established.
+2025-08-25 11:38:49.054 [info] [127.0.0.1][6d46d583][ExtensionHostConnection] <747> Launched Extension Host Process.
+2025-08-25 11:38:50.987 [info] Getting Manifest... github.copilot
+2025-08-25 11:38:50.988 [info] Getting Manifest... github.copilot-chat
+2025-08-25 11:38:51.358 [info] Installing extension: github.copilot {"installPreReleaseVersion":false,"donotIncludePackAndDependencies":true,"donotVerifySignature":false,"context":{"clientTargetPlatform":"win32-x64"},"isApplicationScoped":false,"profileLocation":{"$mid":1,"fsPath":"/root/.vscode-server/extensions/extensions.json","external":"file:///root/.vscode-server/extensions/extensions.json","path":"/root/.vscode-server/extensions/extensions.json","scheme":"file"},"productVersion":{"version":"1.103.2","date":"2025-08-20T16:45:34.255Z"}}
+2025-08-25 11:38:51.361 [info] Installing the extension without checking dependencies and pack github.copilot
+2025-08-25 11:38:51.370 [info] Installing extension: github.copilot-chat {"installPreReleaseVersion":false,"donotIncludePackAndDependencies":true,"donotVerifySignature":false,"context":{"clientTargetPlatform":"win32-x64"},"isApplicationScoped":false,"profileLocation":{"$mid":1,"fsPath":"/root/.vscode-server/extensions/extensions.json","external":"file:///root/.vscode-server/extensions/extensions.json","path":"/root/.vscode-server/extensions/extensions.json","scheme":"file"},"productVersion":{"version":"1.103.2","date":"2025-08-20T16:45:34.255Z"}}
+2025-08-25 11:38:51.371 [info] Installing the extension without checking dependencies and pack github.copilot-chat
+2025-08-25 11:38:54.705 [info] Extension signature verification result for github.copilot-chat: Success. Internal Code: 0. Executed: true. Duration: 2123ms.
+2025-08-25 11:38:54.970 [info] Extracted extension to file:///root/.vscode-server/extensions/github.copilot-chat-0.30.3: github.copilot-chat
+2025-08-25 11:38:54.987 [info] Renamed to /root/.vscode-server/extensions/github.copilot-chat-0.30.3
+2025-08-25 11:38:55.000 [info] Extension installed successfully: github.copilot-chat file:///root/.vscode-server/extensions/extensions.json
+2025-08-25 11:38:55.282 [info] Extension signature verification result for github.copilot: Success. Internal Code: 0. Executed: true. Duration: 2002ms.
+2025-08-25 11:38:56.334 [info] Extracted extension to file:///root/.vscode-server/extensions/github.copilot-1.350.0: github.copilot
+2025-08-25 11:38:56.346 [info] Renamed to /root/.vscode-server/extensions/github.copilot-1.350.0
+2025-08-25 11:38:56.358 [info] Extension installed successfully: github.copilot file:///root/.vscode-server/extensions/extensions.json
+2025-08-25 11:39:38.497 [info] [127.0.0.1][7f1d9888][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2025-08-25 11:39:38.565 [info] [127.0.0.1][6d46d583][ExtensionHostConnection] <747> Extension Host Process exited with code: 0, signal: null.
+2025-08-25 11:39:41.544 [info] [127.0.0.1][ce079719][ManagementConnection] New connection established.
+2025-08-25 11:39:42.488 [info] [127.0.0.1][df0549a9][ExtensionHostConnection] New connection established.
+2025-08-25 11:39:42.494 [info] [127.0.0.1][df0549a9][ExtensionHostConnection] <1722> Launched Extension Host Process.
+2025-08-25 12:10:09.429 [info] [127.0.0.1][ce079719][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2025-08-25 12:10:09.583 [info] [127.0.0.1][df0549a9][ExtensionHostConnection] <1722> Extension Host Process exited with code: 0, signal: null.
+2025-08-25 12:10:41.903 [info] [127.0.0.1][4967181d][ManagementConnection] New connection established.
+2025-08-25 12:10:42.549 [info] [127.0.0.1][c44cd350][ExtensionHostConnection] New connection established.
+2025-08-25 12:10:42.554 [info] [127.0.0.1][c44cd350][ExtensionHostConnection] <21530> Launched Extension Host Process.
