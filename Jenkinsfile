@@ -4,7 +4,7 @@ pipeline {
     environment {
         NODE_VERSION = '18'
         APP_NAME = 'mon-app-js'
-        DEPLOY_DIR = 'C:/Users/nicol/Documents/mon-app'
+        DEPLOY_DIR = '/var/www/html/mon-app'
     }
     
     stages {
