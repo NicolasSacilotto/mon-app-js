@@ -3,3 +3,5 @@
  - Could not resolve to a Repository with the name 'EternalNico/root'.
 2025-08-25 12:22:04.732 [warning] [GitHubSourceControlHistoryItemDetailsProvider][_loadAssignableUsers] Failed to load assignable user(s) for EternalNico/root: GraphqlResponseError: Request failed due to following response errors:
  - Could not resolve to a Repository with the name 'EternalNico/root'.
+2025-08-25 12:22:23.203 [warning] [GitHubSourceControlHistoryItemDetailsProvider][_loadAssignableUsers] Failed to load assignable user(s) for EternalNico/root: GraphqlResponseError: Request failed due to following response errors:
+ - Could not resolve to a Repository with the name 'EternalNico/root'.

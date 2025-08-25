@@ -1,0 +1,20 @@
+tests
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Changes to be committed:
+#	modified:   .gitconfig
+#	new file:   .vscode-server/data/User/workspaceStorage/993735812681f6c2a680806e12338e43-1/vscode.lock
+#	new file:   .vscode-server/data/logs/20250825T113848/exthost5/GitHub.copilot-chat/GitHub Copilot Chat.log
+#	new file:   .vscode-server/data/logs/20250825T113848/exthost5/GitHub.copilot/GitHub Copilot.log
+#	new file:   .vscode-server/data/logs/20250825T113848/exthost5/output_logging_20250825T122153/1-GitHub Copilot Log (Code References).log
+#	new file:   .vscode-server/data/logs/20250825T113848/exthost5/remoteExtHostTelemetry.log
+#	new file:   .vscode-server/data/logs/20250825T113848/exthost5/remoteexthost.log
+#	new file:   .vscode-server/data/logs/20250825T113848/exthost5/vscode.git/Git.log
+#	new file:   .vscode-server/data/logs/20250825T113848/exthost5/vscode.github/GitHub.log
+#	new file:   .vscode-server/data/logs/20250825T113848/exthost5/vscode.html-language-features/HTML Language Server.log
+#
+# Changes not staged for commit:
+#	modified:   .vscode-server/data/logs/20250825T113848/exthost5/vscode.git/Git.log
+#
