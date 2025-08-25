@@ -49,3 +49,10 @@ function updateTimestamp() {
         timestampElement.textContent = new Date().toLocaleString('fr-FR');
     }
 }
+
+function getRandomInt(min, max) {
+    // Retourne un entier aléatoire entre min et max inclus
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
