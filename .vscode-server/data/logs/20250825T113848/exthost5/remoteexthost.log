@@ -1,0 +1,16 @@
+2025-08-25 12:21:53.317 [info] Extension host with pid 31971 started
+2025-08-25 12:21:53.317 [error] Error: EEXIST: file already exists, open '/root/.vscode-server/data/User/workspaceStorage/993735812681f6c2a680806e12338e43/vscode.lock'
+2025-08-25 12:21:53.317 [info] Lock '/root/.vscode-server/data/User/workspaceStorage/993735812681f6c2a680806e12338e43/vscode.lock': Could not acquire lock, checking if the file is stale.
+2025-08-25 12:21:53.317 [info] Lock '/root/.vscode-server/data/User/workspaceStorage/993735812681f6c2a680806e12338e43/vscode.lock': The lock does not look stale, elapsed: 298233 ms, giving up.
+2025-08-25 12:21:53.332 [info] Lock '/root/.vscode-server/data/User/workspaceStorage/993735812681f6c2a680806e12338e43-1/vscode.lock': Lock acquired.
+2025-08-25 12:21:53.487 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onLanguage'
+2025-08-25 12:21:53.488 [info] ExtensionService#_doActivateExtension vscode.tunnel-forwarding, startup: false, activationEvent: 'onTunnel'
+2025-08-25 12:21:53.489 [info] ExtensionService#_doActivateExtension vscode.html-language-features, startup: false, activationEvent: 'onLanguage:html'
+2025-08-25 12:21:54.491 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*', root cause: vscode.git
+2025-08-25 12:21:54.511 [info] ExtensionService#_doActivateExtension vscode.git, startup: true, activationEvent: '*'
+2025-08-25 12:21:54.513 [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+2025-08-25 12:21:54.764 [info] Eager extensions activated
+2025-08-25 12:21:54.765 [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: false, activationEvent: 'onStartupFinished'
+2025-08-25 12:21:54.765 [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+2025-08-25 12:21:54.766 [info] ExtensionService#_doActivateExtension GitHub.copilot, startup: false, activationEvent: 'onStartupFinished'
+2025-08-25 12:21:54.766 [info] ExtensionService#_doActivateExtension GitHub.copilot-chat, startup: false, activationEvent: 'onStartupFinished'

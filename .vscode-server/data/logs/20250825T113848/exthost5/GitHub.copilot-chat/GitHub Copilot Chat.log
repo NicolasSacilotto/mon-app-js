@@ -1,0 +1,17 @@
+2025-08-25 12:22:00.084 [info] [GitExtensionServiceImpl] Initializing Git extension service.
+2025-08-25 12:22:00.084 [info] Can't use the Electron fetcher in this environment.
+2025-08-25 12:22:00.084 [info] Using the Node fetch fetcher.
+2025-08-25 12:22:00.084 [info] [GitExtensionServiceImpl] Successfully activated the vscode.git extension.
+2025-08-25 12:22:00.084 [info] [GitExtensionServiceImpl] Enablement state of the vscode.git extension: true.
+2025-08-25 12:22:00.084 [info] [GitExtensionServiceImpl] Successfully registered Git commit message provider.
+2025-08-25 12:22:01.338 [info] Logged in as EternalNico
+2025-08-25 12:22:03.192 [error] GithubCodeSearchService.getRemoteIndexState(eternalnico/root). Failed to fetch indexing status. Response: 404. {"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}
+2025-08-25 12:22:03.393 [info] Got Copilot token for EternalNico
+2025-08-25 12:22:03.411 [info] activationBlocker from 'languageModelAccess' took for 2189ms
+2025-08-25 12:22:04.031 [info] copilot token chat_enabled: true, sku: free_limited_copilot
+2025-08-25 12:22:04.032 [info] GitHub.vscode-pull-request-github extension is not yet activated.
+2025-08-25 12:22:04.055 [info] Registering default platform agent...
+2025-08-25 12:22:04.056 [info] activationBlocker from 'conversationFeature' took for 2841ms
+2025-08-25 12:22:04.410 [info] Fetched model metadata in 3171ms 218c220a-bebc-40ff-9e1b-4dede1a8c14b
+2025-08-25 12:22:04.840 [info] BYOK: Copilot Chat known models list fetched successfully.
+2025-08-25 12:22:05.012 [error] GithubCodeSearchService.getRemoteIndexState(eternalnico/root). Failed to fetch indexing status. Response: 404. {"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}

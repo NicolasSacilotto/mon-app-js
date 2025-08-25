@@ -1,0 +1,52 @@
+2025-08-25 12:21:58.247 [info] [main] Log level: Info
+2025-08-25 12:21:58.247 [info] [main] Validating found git in: "git"
+2025-08-25 12:21:58.247 [info] [main] Using git "2.34.1" from "git"
+2025-08-25 12:21:58.247 [info] [Model][doInitialScan] Initial repository scan started
+2025-08-25 12:21:58.247 [info] > git rev-parse --show-toplevel [4ms]
+2025-08-25 12:21:58.247 [info] > git rev-parse --git-dir --git-common-dir --show-superproject-working-tree [3356ms]
+2025-08-25 12:21:58.247 [info] [Model][openRepository] Opened repository (path): /root
+2025-08-25 12:21:58.247 [info] [Model][openRepository] Opened repository (real path): /root
+2025-08-25 12:21:58.247 [info] [Model][openRepository] Opened repository (kind): repository
+2025-08-25 12:21:58.270 [info] > git rev-parse --show-toplevel [163ms]
+2025-08-25 12:21:58.271 [info] > git config --get commit.template [169ms]
+2025-08-25 12:21:58.621 [info] > git rev-parse --show-toplevel [342ms]
+2025-08-25 12:21:58.644 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [314ms]
+2025-08-25 12:21:59.765 [info] > git status -z -uall [1107ms]
+2025-08-25 12:21:59.766 [info] > git rev-parse --show-toplevel [1133ms]
+2025-08-25 12:22:00.001 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1330ms]
+2025-08-25 12:22:00.038 [info] > git check-ignore -v -z --stdin [261ms]
+2025-08-25 12:22:00.042 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [19ms]
+2025-08-25 12:22:00.050 [info] > git rev-parse --show-toplevel [53ms]
+2025-08-25 12:22:00.072 [info] > git config --get --local branch.main.vscode-merge-base [22ms]
+2025-08-25 12:22:00.072 [warning] [Git][config] git config failed: Failed to execute git
+2025-08-25 12:22:00.083 [info] > git config --get commit.template [49ms]
+2025-08-25 12:22:00.161 [info] > git rev-parse --show-toplevel [93ms]
+2025-08-25 12:22:00.165 [info] [Model][doInitialScan] Initial repository scan completed - repositories (1), closed repositories (0), parent repositories (0), unsafe repositories (0)
+2025-08-25 12:22:00.233 [info] > git show --textconv :mon-app-js/src/index.html [59ms]
+2025-08-25 12:22:00.234 [info] > git ls-files --stage -- mon-app-js/src/index.html [50ms]
+2025-08-25 12:22:00.244 [info] > git reflog main --grep-reflog=branch: Created from *. [162ms]
+2025-08-25 12:22:00.271 [info] > git cat-file -s e421969609b7c2802e6bc08517b6df737c98b165 [29ms]
+2025-08-25 12:22:00.272 [info] > git rev-parse --show-toplevel [48ms]
+2025-08-25 12:22:00.273 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [59ms]
+2025-08-25 12:22:00.324 [info] > git symbolic-ref --short refs/remotes/origin/HEAD [70ms]
+2025-08-25 12:22:00.325 [info] fatal: ref refs/remotes/origin/HEAD is not a symbolic ref
+2025-08-25 12:22:00.325 [warning] [Repository][getDefaultBranch] Failed to get default branch details: Failed to execute git.
+2025-08-25 12:22:00.329 [info] > git status -z -uall [48ms]
+2025-08-25 12:22:00.330 [info] > git rev-parse --show-toplevel [27ms]
+2025-08-25 12:22:00.330 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [37ms]
+2025-08-25 12:22:01.265 [info] > git blame --root --incremental f0c4fe0511725a2b91aa57572b9cd6fc080d28da -- mon-app-js/src/index.html [76ms]
+2025-08-25 12:22:01.690 [info] > git check-ignore -v -z --stdin [5ms]
+2025-08-25 12:22:01.880 [info] > git config --get commit.template [12ms]
+2025-08-25 12:22:01.893 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [14ms]
+2025-08-25 12:22:01.934 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [21ms]
+2025-08-25 12:22:02.314 [info] > git status -z -uall [411ms]
+2025-08-25 12:22:04.161 [info] > git log --format=%H%n%aN%n%aE%n%at%n%ct%n%P%n%D%n%B -z --shortstat --diff-merges=first-parent -n50 --skip=0 --topo-order --decorate=full --stdin [3147ms]
+2025-08-25 12:22:07.349 [info] > git config --get commit.template [7ms]
+2025-08-25 12:22:07.349 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [1ms]
+2025-08-25 12:22:07.365 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2025-08-25 12:22:07.374 [info] > git status -z -uall [17ms]
+2025-08-25 12:22:08.046 [info] > git check-ignore -v -z --stdin [2ms]
+2025-08-25 12:22:12.392 [info] > git config --get commit.template [7ms]
+2025-08-25 12:22:12.393 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-08-25 12:22:12.408 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2025-08-25 12:22:12.415 [info] > git status -z -uall [16ms]
