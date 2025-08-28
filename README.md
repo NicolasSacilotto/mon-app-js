@@ -145,3 +145,16 @@ Ces seuils ont provoqué une erreur (NullPointerException) car Jest ne génère 
 voici la vue depuis l'interface jenkins concernant le rapport:
 ![jenkins_rapport](images/jenkins_rapport.png)
 
+
+
+voici le code pour l'ajout d'une step d'artefact : 
+stage('Archive Artifacts') {
+    steps {
+        echo 'Archivage des artefacts...'
+        archiveArtifacts artifacts: 'coverage/**/*, tests/**/*, dist/**/*', allowEmptyArchive: true
+    }
+}
+
+
+voici une vue depuis l'interface : 
+![artefacts](images/artefacts.png)
