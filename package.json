@@ -19,7 +19,7 @@
   "collectCoverage": true,
   "coverageDirectory": "coverage",
   "coverageReporters": ["text","cobertura"],
-  "rootDir": "./",
+  "rootDir": ".",
   "reporters": [
     "default",
     ["jest-junit", {"outputDirectory": "/tmp/tests", "outputName": "junit.xml"}]
