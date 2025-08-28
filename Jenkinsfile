@@ -9,6 +9,14 @@ pipeline {
         TMPDIR = '/tmp'
     }
 
+    stages {
+        stage('Start of Pipeline') {
+            steps {
+                sh '''
+                    echo "Début du pipeline pour ${APP_NAME}"
+                '''
+            }
+        }
 
         stage('Checkout') {
             steps {
