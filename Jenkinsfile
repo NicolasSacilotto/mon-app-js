@@ -70,7 +70,7 @@ pipeline {
                 sh 'npm test'
                 sh '''
                 # Normaliser la source dans Cobertura pour Jenkins
-                sed -i 's|<source>.*</source>|<source>/jenkins_rs</source>|' coverage/cobertura-coverage.xml
+                sed -i 's|<source>.*</source>|<source>/jenkins_rs/mon-app-js</source>|' coverage/cobertura-coverage.xml
                 '''
             }
         }
