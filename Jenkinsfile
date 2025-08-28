@@ -1,19 +1,3 @@
-def sendDiscordMessage(String status, String color, String message) {
-        sh """
-            curl -H "Content-Type: application/json" \
-                -X POST \
-                -d '{
-                    "embeds": [{
-                        "title": "${status}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                        "description": "${message}",
-                        "color": ${color},
-                        "url": "${env.BUILD_URL}"
-                    }]
-                    }' \
-                ${env.DISCORD_WEBHOOK}
-        """
-    }
-
 pipeline {
     agent any
     
@@ -141,7 +125,21 @@ pipeline {
         }
     }
 
-    
+    def sendDiscordMessage(String status, String color, String message) {
+        sh """
+            curl -H "Content-Type: application/json" \
+                -X POST \
+                -d '{
+                    "embeds": [{
+                        "title": "${status}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        "description": "${message}",
+                        "color": ${color},
+                        "url": "${env.BUILD_URL}"
+                    }]
+                    }' \
+                ${env.DISCORD_WEBHOOK}
+        """
+    }
 
     post {
         always {
@@ -152,46 +150,16 @@ pipeline {
             '''
         }
         success {
-            echo 'Pipeline exécuté avec succès!'
-            emailext (
-                subject: "Build Success: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                body: """
-                    Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.
-                    
-                    Build: ${env.BUILD_NUMBER}
-                    Branch: ${env.BRANCH_NAME}
-                    
-                    Voir les détails: ${env.BUILD_URL}
-                """,
-                to: "${env.CHANGE_AUTHOR_EMAIL}"
-            )
-            script {
-                sendDiscordMessage("Succès", "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\nBranch: ${env.BRANCH_NAME}")
-            }
+            echo 'Pipeline exécuté avec succès!'  
+            sendDiscordMessage("Succès", "3066992", "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\nBranch: ${env.BRANCH_NAME}")
         }
         failure {
             echo 'Le pipeline a échoué!'
-            emailext (
-                subject: "Build Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
-                body: """
-                    Le déploiement de ${env.JOB_NAME} a échoué.
-                    
-                    Build: ${env.BUILD_NUMBER}
-                    Branch: ${env.BRANCH_NAME}
-                    
-                    Voir les détails: ${env.BUILD_URL}
-                """,
-                to: "${env.CHANGE_AUTHOR_EMAIL}"
-            )
-            script {
-                sendDiscordMessage("Échec", "Le déploiement de ${env.JOB_NAME} a échoué.\nBranch: ${env.BRANCH_NAME}")
-            }
+            sendDiscordMessage("Échec", "15158332", "Le déploiement de ${env.JOB_NAME} a échoué.\nBranch: ${env.BRANCH_NAME}")
         }
         unstable {
             echo 'Build instable - des avertissements ont été détectés'
-            script {
-                sendDiscordMessage("Instable", "Des avertissements ont été détectés dans ${env.JOB_NAME}.\nBranch: ${env.BRANCH_NAME}")
-            }
+            sendDiscordMessage("Instable", "16776960", "Des avertissements ont été détectés dans ${env.JOB_NAME}.\nBranch: ${env.BRANCH_NAME}")
         }
     }
 }
