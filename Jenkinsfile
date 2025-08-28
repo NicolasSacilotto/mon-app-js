@@ -53,7 +53,7 @@ pipeline {
             steps {
                 echo 'Génération du rapport de couverture Cobertura...'
                 sh '''
-                    mkdir -p $TMPDIR/jest
+                    ls 
                     npx jest --coverage --coverageReporters=cobertura
                     ls -la coverage/
                     if [ ! -f coverage/cobertura-coverage.xml ]; then
