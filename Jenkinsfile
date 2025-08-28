@@ -86,7 +86,7 @@ pipeline {
                 publishCoverage adapters: [
                     coberturaAdapter('coverage/cobertura-coverage.xml')
                 ],
-                failNoReports: true,
+                failNoReports: true
                 
             }
         }
