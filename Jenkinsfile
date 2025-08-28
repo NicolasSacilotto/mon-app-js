@@ -124,7 +124,7 @@ pipeline {
             }
         }
     }
-    post {
+   post {
         always {
             echo 'Nettoyage des ressources temporaires...'
             sh '''
@@ -134,51 +134,57 @@ pipeline {
         }
         success {
             echo 'Pipeline exécuté avec succès!'
-            sh """
-                curl -H "Content-Type: application/json" \
-                    -X POST \
-                    -d '{
-                        "embeds": [{
-                            "title": "Succès: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                            "description": "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\\nBranch: ${env.BRANCH_NAME}",
-                            "color": 3066992,
-                            "url": "${env.BUILD_URL}"
-                        }]
-                    }' \
-                    ${env.DISCORD_WEBHOOK}
-            """
+            script {
+                sh '''
+                    curl -H "Content-Type: application/json" \
+                        -X POST \
+                        -d \'{
+                            "embeds": [{
+                                "title": "Succès: '"${env.JOB_NAME} #${env.BUILD_NUMBER}"'",
+                                "description": "Le déploiement de '"${env.JOB_NAME}"' s\'est terminé avec succès.\\nBranch: '"${env.BRANCH_NAME}"'",
+                                "color": 3066992,
+                                "url": "'"${env.BUILD_URL}"'"
+                            }]
+                        }\' \
+                        '"${env.DISCORD_WEBHOOK}"'
+                '''
+            }
         }
         failure {
             echo 'Le pipeline a échoué!'
-            sh """
-                curl -H "Content-Type: application/json" \
-                    -X POST \
-                    -d '{
-                        "embeds": [{
-                            "title": "Échec: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                            "description": "Le déploiement de ${env.JOB_NAME} a échoué.\\nBranch: ${env.BRANCH_NAME}",
-                            "color": 15158332,
-                            "url": "${env.BUILD_URL}"
-                        }]
-                    }' \
-                    ${env.DISCORD_WEBHOOK}
-            """
+            script {
+                sh '''
+                    curl -H "Content-Type: application/json" \
+                        -X POST \
+                        -d \'{
+                            "embeds": [{
+                                "title": "Échec: '"${env.JOB_NAME} #${env.BUILD_NUMBER}"'",
+                                "description": "Le déploiement de '"${env.JOB_NAME}"' a échoué.\\nBranch: '"${env.BRANCH_NAME}"'",
+                                "color": 15158332,
+                                "url": "'"${env.BUILD_URL}"'"
+                            }]
+                        }\' \
+                        '"${env.DISCORD_WEBHOOK}"'
+                '''
+            }
         }
         unstable {
             echo 'Build instable - des avertissements ont été détectés'
-            sh """
-                curl -H "Content-Type: application/json" \
-                    -X POST \
-                    -d '{
-                        "embeds": [{
-                            "title": "Instable: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                            "description": "Des avertissements ont été détectés dans ${env.JOB_NAME}.\\nBranch: ${env.BRANCH_NAME}",
-                            "color": 16776960,
-                            "url": "${env.BUILD_URL}"
-                        }]
-                    }' \
-                    ${env.DISCORD_WEBHOOK}
-            """
+            script {
+                sh '''
+                    curl -H "Content-Type: application/json" \
+                        -X POST \
+                        -d \'{
+                            "embeds": [{
+                                "title": "Instable: '"${env.JOB_NAME} #${env.BUILD_NUMBER}"'",
+                                "description": "Des avertissements ont été détectés dans '"${env.JOB_NAME}"'.\\nBranch: '"${env.BRANCH_NAME}"'",
+                                "color": 16776960,
+                                "url": "'"${env.BUILD_URL}"'"
+                            }]
+                        }\' \
+                        '"${env.DISCORD_WEBHOOK}"'
+                '''
+            }
         }
     }
 }
