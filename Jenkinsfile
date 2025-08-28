@@ -62,7 +62,7 @@ stage('Code Coverage') {
     steps {
         echo 'Analyse de la couverture de code...'
         publishCoverage adapters: [
-            coberturaAdapter('coverage/cobertura-coverage.xml')
+            coberturaAdapter('/var/jenkins_home/projects/mon-app-js/coverage/cobertura-coverage.xml')
         ],
         failNoReports: true,
         globalThresholds: [
