@@ -124,24 +124,6 @@ pipeline {
             }
         }
     }
-}
-
-    def sendDiscordMessage(String status, String color, String message) {
-        sh """
-            curl -H "Content-Type: application/json" \
-                -X POST \
-                -d '{
-                    "embeds": [{
-                        "title": "${status}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                        "description": "${message}",
-                        "color": ${color},
-                        "url": "${env.BUILD_URL}"
-                    }]
-                    }' \
-                ${env.DISCORD_WEBHOOK}
-        """
-    }
-
     post {
         always {
             echo 'Nettoyage des ressources temporaires...'
@@ -151,18 +133,52 @@ pipeline {
             '''
         }
         success {
-            echo 'Pipeline exécuté avec succès!'  
-            sendDiscordMessage("Succès", "3066992", "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\nBranch: ${env.BRANCH_NAME}")
+            echo 'Pipeline exécuté avec succès!'
+            sh """
+                curl -H "Content-Type: application/json" \
+                    -X POST \
+                    -d '{
+                        "embeds": [{
+                            "title": "Succès: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                            "description": "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\\nBranch: ${env.BRANCH_NAME}",
+                            "color": 3066992,
+                            "url": "${env.BUILD_URL}"
+                        }]
+                    }' \
+                    ${env.DISCORD_WEBHOOK}
+            """
         }
         failure {
             echo 'Le pipeline a échoué!'
-            sendDiscordMessage("Échec", "15158332", "Le déploiement de ${env.JOB_NAME} a échoué.\nBranch: ${env.BRANCH_NAME}")
+            sh """
+                curl -H "Content-Type: application/json" \
+                    -X POST \
+                    -d '{
+                        "embeds": [{
+                            "title": "Échec: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                            "description": "Le déploiement de ${env.JOB_NAME} a échoué.\\nBranch: ${env.BRANCH_NAME}",
+                            "color": 15158332,
+                            "url": "${env.BUILD_URL}"
+                        }]
+                    }' \
+                    ${env.DISCORD_WEBHOOK}
+            """
         }
         unstable {
             echo 'Build instable - des avertissements ont été détectés'
-            sendDiscordMessage("Instable", "16776960", "Des avertissements ont été détectés dans ${env.JOB_NAME}.\nBranch: ${env.BRANCH_NAME}")
+            sh """
+                curl -H "Content-Type: application/json" \
+                    -X POST \
+                    -d '{
+                        "embeds": [{
+                            "title": "Instable: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                            "description": "Des avertissements ont été détectés dans ${env.JOB_NAME}.\\nBranch: ${env.BRANCH_NAME}",
+                            "color": 16776960,
+                            "url": "${env.BUILD_URL}"
+                        }]
+                    }' \
+                    ${env.DISCORD_WEBHOOK}
+            """
         }
     }
-
-
-
+}
