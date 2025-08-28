@@ -67,6 +67,8 @@ pipeline {
         stage('Code Coverage') {
             steps {
                 echo 'Analyse de la couverture de code...'
+                sh 'ls -l coverage/cobertura-coverage.xml'
+                sh 'head -n 20 coverage/cobertura-coverage.xml'
                 publishCoverage adapters: [
                     coberturaAdapter('coverage/cobertura-coverage.xml')
                 ],
