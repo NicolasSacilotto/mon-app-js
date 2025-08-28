@@ -22,7 +22,7 @@
   "rootDir": "./",
   "reporters": [
     "default",
-    ["jest-junit", {"outputDirectory": "tests", "outputName": "junit.xml"}]
+    ["jest-junit", {"outputDirectory": "/tmp/tests", "outputName": "junit.xml"}]
   ]
 }
 }
