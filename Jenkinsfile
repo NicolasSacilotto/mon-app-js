@@ -43,7 +43,7 @@ pipeline {
             steps {
                 echo 'Analyse de la couverture de code...'
                 publishCoverage adapters: [
-                    [$class: 'LcovReportAdapter', path: 'coverage/lcov.info']
+                    cobertura(path: 'coverage/cobertura-coverage.xml')
                 ],
                 failNoReports: true,
                 globalThresholds: [
@@ -52,6 +52,7 @@ pipeline {
                 ]
             }
         }
+
         
         stage('Code Quality Check') {
             steps {

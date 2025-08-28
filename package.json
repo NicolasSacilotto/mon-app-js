@@ -16,18 +16,22 @@
     "jest-junit": "^16.0.0"
   },
   "jest": {
-    "collectCoverage": true,
-    "coverageReporters": ["lcov", "text"],
-    "coverageDirectory": "coverage",
-    "reporters": [
-      "default",
-      [
-        "jest-junit",
-        {
-          "outputDirectory": "tests",
-          "outputName": "junit.xml"
-        }
-      ]
+  "reporters": [
+    "default",
+    [
+      "jest-junit",
+      {
+        "outputDirectory": "tests",
+        "outputName": "junit.xml"
+      }
     ]
-  }
+  ],
+  "coverageDirectory": "coverage",
+  "collectCoverage": true,
+  "coverageReporters": [
+    "text",
+    "cobertura",
+    "lcov"
+  ]
+}
 }
