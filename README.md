@@ -69,6 +69,17 @@ l'image des pipelines depuis discord :
 pour le coverage : 
 
 j'ai installé le plugin COVERAGE API
+J'ai changé le fichier package json pour y placer ce code : 
+"jest": {
+  "collectCoverage": true,
+  "coverageDirectory": "coverage",
+  "coverageReporters": ["text","cobertura"],
+  "rootDir": ".",
+  "reporters": [
+    "default",
+    ["jest-junit", {"outputDirectory": "/tmp/tests", "outputName": "junit.xml"}]
+  ]
+}
 
 🎯 Problème rencontré
 
