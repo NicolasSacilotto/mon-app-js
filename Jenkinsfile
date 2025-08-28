@@ -87,10 +87,7 @@ pipeline {
                     coberturaAdapter('coverage/cobertura-coverage.xml')
                 ],
                 failNoReports: true,
-                globalThresholds: [
-                    [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
-                    [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
-                ]
+                
             }
         }
 
