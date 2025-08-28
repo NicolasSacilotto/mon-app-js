@@ -33,7 +33,7 @@ describe('Tests de la calculatrice', () => {
         expect(isValidNumber(Infinity)).toBe(false);
     });
 
-    test('Tests échoué', () => {
-        expect(isValidNumber(Infinity)).toBe(true);
+    test('Tests corrigé', () => {
+        expect(isValidNumber(Infinity)).toBe(false);
     });
 });

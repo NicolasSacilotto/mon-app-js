@@ -21,3 +21,19 @@ test rajouté :
 test('Tests échoué', () => {
         expect(isValidNumber(Infinity)).toBe(true);
 });
+
+la stacktrace d'erreur : 
+expect(received).toBe(expected) // Object.is equality
+    Expected: true
+    Received: false
+      35 |
+      36 |     test('Tests échoué', () =&gt; {
+    &gt; 37 |         expect(isValidNumber(Infinity)).toBe(true);
+         |                                         ^
+      38 |     });
+      39 | });
+      at Object.toBe (tests/app.test.js:37:41)
+
+dans la pipeline overview j'ai une erreur sur le job de test.
+Après la correction : 
+
