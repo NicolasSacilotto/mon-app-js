@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node server.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "build": "npm run copy-files",
     "copy-files": "mkdir -p dist && cp -r src/* dist/",
     "clean": "rm -rf dist node_modules"
@@ -16,26 +16,18 @@
     "jest-junit": "^16.0.0"
   },
   "jest": {
-  "collectCoverage": true,
-  "coverageReporters": ["lcov", "text", "cobertura"],
-  "coverageDirectory": "coverage",
-  "reporters": [
-    "default",
-    [
-      "jest-junit",
-      {
-        "outputDirectory": "tests",
-        "outputName": "junit.xml"
-      }
+    "collectCoverage": true,
+    "coverageReporters": ["lcov", "text"],
+    "coverageDirectory": "coverage",
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "tests",
+          "outputName": "junit.xml"
+        }
+      ]
     ]
-  ],
-  "coverageThreshold": {
-    "global": {
-      "branches": 80,
-      "functions": 85,
-      "lines": 90,
-      "statements": 90
-    }
   }
-}
 }

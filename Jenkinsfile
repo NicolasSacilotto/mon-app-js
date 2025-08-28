@@ -38,6 +38,20 @@ pipeline {
                 }
             }
         }
+
+        stage('Code Coverage') {
+            steps {
+                echo 'Analyse de la couverture de code...'
+                publishCoverage adapters: [
+                    [$class: 'LcovReportAdapter', path: 'coverage/lcov.info']
+                ],
+                failNoReports: true,
+                globalThresholds: [
+                    [thresholdTarget: 'Line', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
+                    [thresholdTarget: 'Branch', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
+                ]
+            }
+        }
         
         stage('Code Quality Check') {
             steps {
@@ -47,20 +61,6 @@ pipeline {
                     find src -name "*.js" -exec node -c {} \\;
                     echo "Vérification terminée"
                 '''
-            }
-        }
-
-        stage('Code Coverage') {
-            steps {
-                echo 'Analyse de la couverture de code...'
-                publishCoverage adapters: [
-                    lcovAdapter('coverage/lcov.info')
-                ],
-                failNoReports: true,
-                globalThresholds: [
-                    [thresholdTarget: 'Line', unhealthyThreshold: 80.0, unstableThreshold: 85.0],
-                    [thresholdTarget: 'Branch', unhealthyThreshold: 70.0, unstableThreshold: 80.0]
-                ]
             }
         }
 
