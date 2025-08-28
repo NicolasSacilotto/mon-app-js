@@ -125,14 +125,6 @@ pipeline {
         }
     }
 post {
-    always {
-        echo 'Nettoyage des ressources temporaires...'
-        sh '''
-            rm -rf node_modules/.cache
-            rm -rf staging
-        '''
-    }
-
     success {
         echo 'Pipeline exécuté avec succès!'
         script {
@@ -198,4 +190,5 @@ EOF
             """
         }
     }
+}
 }
