@@ -2,7 +2,7 @@
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 <coverage lines-valid="7" lines-covered="7" line-rate="1" branches-valid="6" branches-covered="5" branch-rate="0.8332999999999999" timestamp="1756390532082" complexity="0" version="0.1">
   <sources>
-    <source>/var/jenkins_home/projects/mon-app-js</source>
+    <source>/jenkins_rs/mon-app-js</source>
   </sources>
   <packages>
     <package name="main" line-rate="1" branch-rate="0.8332999999999999">
