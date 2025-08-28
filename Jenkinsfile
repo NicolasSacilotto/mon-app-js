@@ -13,6 +13,7 @@ pipeline {
             stage('Checkout') {
                 steps {
                     echo 'Récupération du code source...'
+                    
                     checkout scm
             }
         }
@@ -21,6 +22,7 @@ pipeline {
             steps {
                 echo 'Installation des dépendances Node.js...'
                 sh '''
+                    whoami
                     node --version
                     npm --version
                     npm ci
@@ -43,7 +45,7 @@ pipeline {
             steps {
                 dir('/jenkins_rs/mon-app-js') {
                     sh '''
-                        whoami
+                        
                         npx jest --coverage --coverageReporters=cobertura
                         ls -la coverage/
                         if [ ! -f coverage/cobertura-coverage.xml ]; then
