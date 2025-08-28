@@ -51,18 +51,19 @@ pipeline {
 
         stage('Generate Coverage Report') {
             steps {
-                echo 'Génération du rapport de couverture Cobertura...'
-                sh '''
-                    ls 
-                    npx jest --coverage --coverageReporters=cobertura
-                    ls -la coverage/
-                    if [ ! -f coverage/cobertura-coverage.xml ]; then
-                        echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
-                        exit 1
-                    fi
-                '''
+                dir('/jenkins_rs/mon-app-js') {
+                    sh '''
+                        npx jest --coverage --coverageReporters=cobertura --rootDir=/jenkins_rs/mon-app-js
+                        ls -la coverage/
+                        if [ ! -f coverage/cobertura-coverage.xml ]; then
+                            echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
+                            exit 1
+                        fi
+                    '''
+                }
             }
         }
+
 
         stage('Code Coverage') {
             steps {
