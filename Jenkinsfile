@@ -124,6 +124,7 @@ pipeline {
             }
         }
     }
+}
 
     def sendDiscordMessage(String status, String color, String message) {
         sh """
@@ -162,6 +163,6 @@ pipeline {
             sendDiscordMessage("Instable", "16776960", "Des avertissements ont été détectés dans ${env.JOB_NAME}.\nBranch: ${env.BRANCH_NAME}")
         }
     }
-}
+
 
 
