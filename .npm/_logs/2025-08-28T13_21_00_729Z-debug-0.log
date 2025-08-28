@@ -1,0 +1,18 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.8.2
+2 info using node@v18.20.8
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/root/.npmrc
+5 silly config load:file:/usr/etc/npmrc
+6 verbose title npm view jest-junit description dist-tags.latest homepage version time
+7 verbose argv "view" "--json" "--" "jest-junit" "description" "dist-tags.latest" "homepage" "version" "time"
+8 verbose logfile logs-max:10 dir:/root/.npm/_logs/2025-08-28T13_21_00_729Z-
+9 verbose logfile /root/.npm/_logs/2025-08-28T13_21_00_729Z-debug-0.log
+10 silly logfile done cleaning log files
+11 http fetch GET 200 https://registry.npmjs.org/jest-junit 362ms (cache miss)
+12 verbose cwd /root
+13 verbose os Linux 6.6.87.2-microsoft-standard-WSL2
+14 verbose node v18.20.8
+15 verbose npm  v10.8.2
+16 verbose exit 0
+17 info ok

@@ -1,0 +1,27 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.8.2
+2 info using node@v18.20.8
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/.npmrc
+5 silly config load:file:/root/.npmrc
+6 silly config load:file:/usr/etc/npmrc
+7 verbose title npm test
+8 verbose argv "test"
+9 verbose logfile logs-max:10 dir:/root/.npm/_logs/2025-08-28T13_19_47_849Z-
+10 verbose logfile /root/.npm/_logs/2025-08-28T13_19_47_849Z-debug-0.log
+11 silly logfile done cleaning log files
+12 verbose stack Error: Could not read package.json: Error: ENOENT: no such file or directory, open '/package.json'
+13 error code ENOENT
+14 error syscall open
+15 error path /package.json
+16 error errno -2
+17 error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/package.json'
+18 error enoent This is related to npm not being able to find a file.
+18 error enoent
+19 verbose cwd /
+20 verbose os Linux 6.6.87.2-microsoft-standard-WSL2
+21 verbose node v18.20.8
+22 verbose npm  v10.8.2
+23 verbose exit -2
+24 verbose code -2
+25 error A complete log of this run can be found in: /root/.npm/_logs/2025-08-28T13_19_47_849Z-debug-0.log

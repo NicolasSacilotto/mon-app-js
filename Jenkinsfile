@@ -42,16 +42,22 @@ pipeline {
         stage('Code Coverage') {
             steps {
                 echo 'Analyse de la couverture de code...'
+
+                // Vérifier que le fichier existe
+                sh 'ls -la coverage/'
+
+                // Publier avec Code Coverage API
                 publishCoverage adapters: [
                     coberturaAdapter('coverage/cobertura-coverage.xml')
                 ],
                 failNoReports: true,
                 globalThresholds: [
-                    [thresholdTarget: 'Line', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
-                    [thresholdTarget: 'Branch', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
+                    [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
+                    [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
                 ]
             }
         }
+
 
 
         
