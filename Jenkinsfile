@@ -39,6 +39,28 @@ pipeline {
             }
         }
 
+        stage('Prepare Workspace') {
+    steps {
+        sh '''
+            mkdir -p /jenkins_rs/mon-app-js/@tmp
+            chown -R 1000:1000 /jenkins_rs/mon-app-js
+            chmod -R 775 /jenkins_rs/mon-app-js
+        '''
+    }
+}
+
+stage('Check Permissions') {
+    steps {
+        sh '''
+            ls 
+            whoami
+            ls -ld /jenkins_rs/mon-app-js
+            ls -ld /jenkins_rs/mon-app-js/@tmp
+        '''
+    }
+}
+
+
 
     stage('Generate Coverage Report') {
     steps {
