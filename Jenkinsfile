@@ -39,14 +39,20 @@ pipeline {
             }
         }
 
+
+        stage('Generate Coverage Report') {
+            steps {
+                echo 'Génération du rapport de couverture Cobertura...'
+                sh '''
+                    npm test -- --coverage
+                    ls -la coverage/
+                '''
+            }
+        }
+
         stage('Code Coverage') {
             steps {
                 echo 'Analyse de la couverture de code...'
-
-                // Vérifier que le fichier existe
-                sh 'ls -la coverage/'
-
-                // Publier avec Code Coverage API
                 publishCoverage adapters: [
                     coberturaAdapter('coverage/cobertura-coverage.xml')
                 ],
