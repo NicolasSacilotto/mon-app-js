@@ -6,7 +6,7 @@ pipeline {
         APP_NAME = 'mon-app-js'
         DEPLOY_DIR = '/var/www/html/mon-app'
         DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1410545158226841653/3qNd98Usims2t5s6MO0dmE5EAX0S7whevJrgWWjhM-BOi2j-vUbePHuh75bGgoHjAgtZ'
-        TMPDIR = '/tmp/jenkins_tmp'
+        TMPDIR = '/jenkins_rs/mon-app-js/tmp'
     }
 
     stages {
