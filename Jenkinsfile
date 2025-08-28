@@ -57,6 +57,7 @@ pipeline {
 
         stage('Code Coverage') {
             steps {
+                pwd
                 echo 'Analyse de la couverture de code...'
                 publishCoverage adapters: [
                     coberturaAdapter('coverage/cobertura-coverage.xml')
