@@ -69,7 +69,22 @@ l'image des pipelines depuis discord :
 pour le coverage : 
 
 j'ai installé le plugin COVERAGE API
-J'ai changé le fichier package json pour y placer ce code : 
+J'ai changé le fichier package json
+qui contenait : 
+"jest": {
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "tests",
+          "outputName": "junit.xml"
+        }
+      ]
+    ]
+  }
+  
+pour y placer ce code : 
 "jest": {
   "collectCoverage": true,
   "coverageDirectory": "coverage",
@@ -125,3 +140,8 @@ J’utilise le plugin publishCoverage pour publier les rapports générés par J
 Initialement, j’avais défini des seuils (globalThresholds) pour valider un certain niveau de couverture.
 
 Ces seuils ont provoqué une erreur (NullPointerException) car Jest ne génère pas toutes les métriques attendues.
+
+
+voici la vue depuis l'interface jenkins concernant le rapport:
+![jenkins_rapport](images/jenkins_rapport.png)
+

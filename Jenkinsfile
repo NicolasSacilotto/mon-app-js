@@ -94,6 +94,14 @@ pipeline {
             }
         }
 
+        stage('Archive Artifacts') {
+            steps {
+                echo 'Archivage des artefacts...'
+                archiveArtifacts artifacts: 'coverage/**/*, tests/**/*, dist/**/*', allowEmptyArchive: true
+            }
+        }
+
+
         stage('Build') {
             steps {
                 echo 'Construction de l\'application...'
