@@ -129,6 +129,8 @@ post {
         echo 'Pipeline exécuté avec succès!'
         script {
             sh """
+                export LANG=C.UTF-8
+                export LC_ALL=C.UTF-8
                 cat > payload.json <<EOF
 {
   "embeds": [
@@ -141,7 +143,7 @@ post {
   ]
 }
 EOF
-                curl -H 'Content-Type: application/json' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
+                curl -H 'Content-Type: application/json; charset=utf-8' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
                 rm payload.json
             """
         }
@@ -151,6 +153,8 @@ EOF
         echo 'Le pipeline a échoué!'
         script {
             sh """
+                export LANG=C.UTF-8
+                export LC_ALL=C.UTF-8
                 cat > payload.json <<EOF
 {
   "embeds": [
@@ -163,7 +167,7 @@ EOF
   ]
 }
 EOF
-                curl -H 'Content-Type: application/json' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
+                curl -H 'Content-Type: application/json; charset=utf-8' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
                 rm payload.json
             """
         }
@@ -173,6 +177,8 @@ EOF
         echo 'Build instable - des avertissements ont été détectés'
         script {
             sh """
+                export LANG=C.UTF-8
+                export LC_ALL=C.UTF-8
                 cat > payload.json <<EOF
 {
   "embeds": [
@@ -185,10 +191,11 @@ EOF
   ]
 }
 EOF
-                curl -H 'Content-Type: application/json' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
+                curl -H 'Content-Type: application/json; charset=utf-8' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
                 rm payload.json
             """
         }
     }
 }
+
 }
