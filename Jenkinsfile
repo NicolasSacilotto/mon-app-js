@@ -147,7 +147,9 @@ pipeline {
                 """,
                 to: "${env.CHANGE_AUTHOR_EMAIL}"
             )
-            sendDiscordMessage("Succès", "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\nBranch: ${env.BRANCH_NAME}")
+            script {
+                sendDiscordMessage("Succès", "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\nBranch: ${env.BRANCH_NAME}")
+            }
         }
         failure {
             echo 'Le pipeline a échoué!'
@@ -163,11 +165,15 @@ pipeline {
                 """,
                 to: "${env.CHANGE_AUTHOR_EMAIL}"
             )
-            sendDiscordMessage("Échec", "Le déploiement de ${env.JOB_NAME} a échoué.\nBranch: ${env.BRANCH_NAME}")
+            script {
+                sendDiscordMessage("Échec", "Le déploiement de ${env.JOB_NAME} a échoué.\nBranch: ${env.BRANCH_NAME}")
+            }
         }
         unstable {
             echo 'Build instable - des avertissements ont été détectés'
-            sendDiscordMessage("Instable", "Des avertissements ont été détectés dans ${env.JOB_NAME}.\nBranch: ${env.BRANCH_NAME}")
+            script {
+                sendDiscordMessage("Instable", "Des avertissements ont été détectés dans ${env.JOB_NAME}.\nBranch: ${env.BRANCH_NAME}")
+            }
         }
     }
 }
