@@ -5,8 +5,9 @@ pipeline {
         NODE_VERSION = '18'
         APP_NAME = 'mon-app-js'
         DEPLOY_DIR = '/var/www/html/mon-app'
+        DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1410545158226841653/3qNd98Usims2t5s6MO0dmE5EAX0S7whevJrgWWjhM-BOi2j-vUbePHuh75bGgoHjAgtZ'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -123,7 +124,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         always {
             echo 'Nettoyage des ressources temporaires...'
@@ -146,6 +147,7 @@ pipeline {
                 """,
                 to: "${env.CHANGE_AUTHOR_EMAIL}"
             )
+            sendDiscordMessage("✅ Succès", "3066993", "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\nBranch: ${env.BRANCH_NAME}")
         }
         failure {
             echo 'Le pipeline a échoué!'
@@ -161,9 +163,27 @@ pipeline {
                 """,
                 to: "${env.CHANGE_AUTHOR_EMAIL}"
             )
+            sendDiscordMessage("❌ Échec", "15158332", "Le déploiement de ${env.JOB_NAME} a échoué.\nBranch: ${env.BRANCH_NAME}")
         }
         unstable {
             echo 'Build instable - des avertissements ont été détectés'
+            sendDiscordMessage("⚠️ Instable", "16776960", "Des avertissements ont été détectés dans ${env.JOB_NAME}.\nBranch: ${env.BRANCH_NAME}")
         }
     }
+}
+
+def sendDiscordMessage(String status, String color, String message) {
+    sh """
+        curl -H "Content-Type: application/json" \
+             -X POST \
+             -d '{
+                   "embeds": [{
+                     "title": "${status}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                     "description": "${message}",
+                     "color": ${color},
+                     "url": "${env.BUILD_URL}"
+                   }]
+                 }' \
+             ${env.DISCORD_WEBHOOK}
+    """
 }

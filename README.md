@@ -36,4 +36,13 @@ expect(received).toBe(expected) // Object.is equality
 
 dans la pipeline overview j'ai une erreur sur le job de test.
 Après la correction : 
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.24 s, estimated 1 s
+Ran all test suites.
+
+et dans la pipeline overview le job de test est en success
+
+4. Exercice 4 : Configuration avancée
 
