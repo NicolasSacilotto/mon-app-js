@@ -49,6 +49,16 @@ pipeline {
             }
         }
 
+        stage('sed for Cobertura') {
+            steps {
+                sh 'npm test'
+                sh '''
+                # Normaliser la source dans Cobertura pour Jenkins
+                sed -i 's|<source>.*</source>|<source>.</source>|' coverage/cobertura-coverage.xml
+                '''
+            }
+        }
+
         stage('Generate Coverage Report') {
             steps {
                 dir('/jenkins_rs/mon-app-js') {
