@@ -135,8 +135,8 @@ post {
 {
   "embeds": [
     {
-      "title": "✅ Succès: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-      "description": "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\\nBranch: ${env.BRANCH_NAME}",
+      "title": "Succes: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Le deploy de ${env.JOB_NAME} fonctionne.\\nBranch: ${env.BRANCH_NAME}",
       "color": 3066993,
       "url": "${env.BUILD_URL}"
     }
@@ -150,7 +150,7 @@ EOF
     }
 
     failure {
-        echo 'Le pipeline a échoué!'
+        echo 'Le pipeline est en echec!'
         script {
             sh """
                 export LANG=C.UTF-8
@@ -159,8 +159,8 @@ EOF
 {
   "embeds": [
     {
-      "title": "❌ Échec: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-      "description": "Le déploiement de ${env.JOB_NAME} a échoué.\\nBranch: ${env.BRANCH_NAME}",
+      "title": "Échec: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Le deploy de ${env.JOB_NAME} ne fonctionne pas.\\nBranch: ${env.BRANCH_NAME}",
       "color": 15158332,
       "url": "${env.BUILD_URL}"
     }
@@ -174,7 +174,7 @@ EOF
     }
 
     unstable {
-        echo 'Build instable - des avertissements ont été détectés'
+        echo 'Build instable - Avertissements'
         script {
             sh """
                 export LANG=C.UTF-8
@@ -183,8 +183,8 @@ EOF
 {
   "embeds": [
     {
-      "title": "⚠️ Instable: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-      "description": "Des avertissements ont été détectés dans ${env.JOB_NAME}.\\nBranch: ${env.BRANCH_NAME}",
+      "title": "Instable: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Avertissements dans ${env.JOB_NAME}.\\nBranch: ${env.BRANCH_NAME}",
       "color": 16776960,
       "url": "${env.BUILD_URL}"
     }

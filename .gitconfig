@@ -4,4 +4,4 @@
 [gui]
 	recentrepo = C:/Users/nicol/Documents/git
 [credential]
-	helper = "!f() { /root/.vscode-server/bin/6f17636121051a53c88d3e605c491d22af2ba755/node /tmp/vscode-remote-containers-dc9e7ef0-1d2f-4459-a3bc-19fa1d5e111b.js git-credential-helper $*; }; f"
+	helper = "!f() { /root/.vscode-server/bin/6f17636121051a53c88d3e605c491d22af2ba755/node /tmp/vscode-remote-containers-9b179928-8d98-46d4-84c2-ba22da445327.js git-credential-helper $*; }; f"
