@@ -46,3 +46,21 @@ et dans la pipeline overview le job de test est en success
 
 4. Exercice 4 : Configuration avancée
 
+j'ai créé un serveur discord dans lequel j'ai créé un webhook pour recevoir les notifs dans mon serveur
+
+Dans mon Jenkinsfile, j’ai ajouté une section post pour gérer ce qui se passe une fois que le pipeline est terminé.
+
+J’ai défini trois cas :
+
+success 🟢 : quand le pipeline s’exécute correctement, j’envoie une notification sur Discord pour confirmer que le déploiement s’est bien passé.
+
+failure 🔴 : si le pipeline échoue, j’envoie un message Discord avec l’erreur, pour prévenir rapidement.
+
+unstable ⚠️ : si le build est instable (par exemple des warnings), j’envoie aussi une notification Discord pour signaler le problème.
+
+Pour chaque cas, je génère un fichier payload.json avec le contenu au format attendu par l’API Discord, je l’envoie via curl avec mon webhook, puis je supprime le fichier.
+
+Ça me permet d’avoir un suivi automatique de mes pipelines directement dans Discord, sans devoir aller consulter Jenkins à chaque fois.
+
+l'image des pipelines depuis discord : 
+![Discord](images/discord.png)
