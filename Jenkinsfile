@@ -13,6 +13,7 @@ pipeline {
         stage('Prepare Environment') {
             steps {
                 sh '''
+                    ls 
                     mkdir -p $TMPDIR
                     chmod 777 $TMPDIR
                 '''
