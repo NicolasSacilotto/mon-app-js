@@ -48,22 +48,13 @@ pipeline {
                 }
             }
         }
-
-        stage('sed for Cobertura') {
-            steps {
-                sh 'npm test'
-                sh '''
-                # Normaliser la source dans Cobertura pour Jenkins
-                sed -i 's|<source>.*</source>|<source>/jenkins_rs/mon-app-js</source>|' coverage/cobertura-coverage.xml
-                '''
-            }
-        }
+        
 
         stage('Generate Coverage Report') {
             steps {
                 dir('/jenkins_rs/mon-app-js') {
                     sh '''
-                        npx jest --coverage --coverageReporters=cobertura --rootDir=/jenkins_rs/mon-app-js
+                        npx jest --coverage --coverageReporters=cobertura 
                         ls -la coverage/
                         if [ ! -f coverage/cobertura-coverage.xml ]; then
                             echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
@@ -71,6 +62,16 @@ pipeline {
                         fi
                     '''
                 }
+            }
+        }
+
+        stage('sed for Cobertura') {
+            steps {
+                sh 'npm test'
+                sh '''
+                # Normaliser la source dans Cobertura pour Jenkins
+                sed -i 's|<source>.*</source>|<source>/jenkins_rs</source>|' coverage/cobertura-coverage.xml
+                '''
             }
         }
 
