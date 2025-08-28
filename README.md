@@ -1,160 +1,196 @@
-Pour ce tp : 
+Voici une version uniformisée et structurée de votre `README.md`, rédigée à la première personne et avec une mise en forme claire pour chaque section :
 
-j'ai setup un environnement sur l'IDE Vscode qui contient le répertoire de mon conteneur docker dans lequel j'ai installé et configuré jenkins
+---
 
-tp node/jenkins, j'ai installé le plugin nodeJS
+```markdown
+# TP Node.js/Jenkins : Intégration Continue et Déploiement
 
-pour faire fonctionner la pipeline : 
+## Contexte
+J’ai configuré un environnement sur **VS Code** pointant vers le répertoire de mon conteneur Docker, dans lequel j’ai installé et configuré **Jenkins**. J’ai également installé le plugin **NodeJS** pour Jenkins afin de gérer une pipeline de déploiement pour un projet Node.js.
 
-Exercice 1 : Premier déploiement
-Pour ce TP, j’ai configuré un environnement sur l’IDE VS Code, qui pointe vers le répertoire de mon conteneur Docker où Jenkins est installé et configuré. J’ai également installé le plugin NodeJS pour Jenkins.
+---
 
-Pour faire fonctionner la pipeline Node.js avec Jenkins, j’ai procédé ainsi :
-J’ai installé Node.js 18 et npm dans le conteneur Ubuntu. Ensuite, j’ai installé les dépendances du projet avec la commande appropriée. J’ai ajouté le reporter JUnit pour Jest dans le fichier package.json, puis j’ai installé ce reporter. J’ai modifié le Jenkinsfile afin que Jenkins puisse récupérer le rapport de test généré par Jest. Enfin, j’ai vérifié que le fichier test-results.xml est bien créé après l’exécution des tests.
+## Exercice 1 : Premier déploiement
+### Étapes réalisées :
+1. **Installation de Node.js 18 et npm** dans le conteneur Ubuntu.
+2. **Installation des dépendances** du projet avec `npm install`.
+3. **Ajout du reporter JUnit pour Jest** dans le `package.json` :
+   ```json
+   "jest": {
+     "reporters": [
+       "default",
+       ["jest-junit", { "outputDirectory": "tests", "outputName": "junit.xml" }]
+     ]
+   }
+   ```
+4. **Modification du `Jenkinsfile`** pour que Jenkins récupère le rapport de test généré par Jest (`test-results.xml`).
+5. **Vérification** que le fichier `test-results.xml` est bien créé après l’exécution des tests.
 
-2. Exercice 2 : Gestion des branches
-Création d'une branche develop, création d'un projet multi branch qui permet de récupérer toutes les branches du repo git et de pouvoir de déclencher la pipeline de la branche main ou la branche develop 
+---
 
+## Exercice 2 : Gestion des branches
+1. **Création d’une branche `develop`** dans le dépôt Git.
+2. **Configuration d’un projet multi-branch** dans Jenkins pour :
+   - Récupérer toutes les branches du dépôt.
+   - Déclencher la pipeline sur les branches `main` ou `develop`.
 
-3. Exercice 3 : Tests et qualité
-test rajouté : 
+---
+
+## Exercice 3 : Tests et qualité
+### Ajout d’un test volontairement échoué
+J’ai ajouté un test incorrect pour simuler une erreur :
+```javascript
 test('Tests échoué', () => {
-        expect(isValidNumber(Infinity)).toBe(true);
+    expect(isValidNumber(Infinity)).toBe(true); // Ce test échoue car `isValidNumber(Infinity)` retourne `false`
 });
+```
+- **Résultat initial** :
+  ```
+  expect(received).toBe(expected) // Object.is equality
+  Expected: true
+  Received: false
+  ```
+  Le job de test affichait une erreur dans la **Pipeline Overview**.
 
-la stacktrace d'erreur : 
-expect(received).toBe(expected) // Object.is equality
-    Expected: true
-    Received: false
-      35 |
-      36 |     test('Tests échoué', () =&gt; {
-    &gt; 37 |         expect(isValidNumber(Infinity)).toBe(true);
-         |                                         ^
-      38 |     });
-      39 | });
-      at Object.toBe (tests/app.test.js:37:41)
+- **Après correction** :
+  ```
+  Test Suites: 1 passed, 1 total
+  Tests:       6 passed, 6 total
+  Snapshots:   0 total
+  ```
+  Le job de test est passé en **success**.
 
-dans la pipeline overview j'ai une erreur sur le job de test.
-Après la correction : 
-Test Suites: 1 passed, 1 total
-Tests:       6 passed, 6 total
-Snapshots:   0 total
-Time:        0.24 s, estimated 1 s
-Ran all test suites.
+---
 
-et dans la pipeline overview le job de test est en success
+## Exercice 4 : Configuration avancée
+### Notifications Discord
+J’ai créé un **serveur Discord** et configuré un **webhook** pour recevoir des notifications automatiques depuis Jenkins.
+Dans le `Jenkinsfile`, j’ai ajouté une section `post` pour gérer trois cas :
+- **🟢 Success** : Notification Discord confirmant le succès du déploiement.
+- **🔴 Failure** : Notification avec l’erreur en cas d’échec.
+- **⚠️ Unstable** : Notification en cas de warnings ou de build instable.
 
-4. Exercice 4 : Configuration avancée
+**Processus** :
+1. Génération d’un fichier `payload.json` au format attendu par l’API Discord.
+2. Envoi du message via `curl` avec le webhook.
+3. Suppression du fichier temporaire.
 
-j'ai créé un serveur discord dans lequel j'ai créé un webhook pour recevoir les notifs dans mon serveur
+**Résultat** :
+![Notifications Discord](images/discord.png)
 
-Dans mon Jenkinsfile, j’ai ajouté une section post pour gérer ce qui se passe une fois que le pipeline est terminé.
+---
 
-J’ai défini trois cas :
+### Couverture de code
+1. **Installation du plugin Code Coverage API** dans Jenkins.
+2. **Modification du `package.json`** pour générer un rapport Cobertura :
+   ```json
+   "jest": {
+     "collectCoverage": true,
+     "coverageDirectory": "coverage",
+     "coverageReporters": ["text", "cobertura"],
+     "rootDir": ".",
+     "reporters": [
+       "default",
+       ["jest-junit", { "outputDirectory": "/tmp/tests", "outputName": "junit.xml" }]
+     ]
+   }
+   ```
+3. **Configuration initiale de `publishCoverage`** avec des seuils :
+   ```groovy
+   publishCoverage adapters: [
+       coberturaAdapter('coverage/cobertura-coverage.xml')
+   ],
+   failNoReports: true,
+   globalThresholds: [
+       [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
+       [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
+   ]
+   ```
 
-success 🟢 : quand le pipeline s’exécute correctement, j’envoie une notification sur Discord pour confirmer que le déploiement s’est bien passé.
+#### Problème rencontré
+Le plugin **Code Coverage API** a généré une **`NullPointerException`** car certaines métriques (comme `CLASS` ou `METHOD`) étaient manquantes dans le rapport Cobertura. Le plugin tentait d’appliquer des seuils sur des valeurs inexistantes.
 
-failure 🔴 : si le pipeline échoue, j’envoie un message Discord avec l’erreur, pour prévenir rapidement.
-
-unstable ⚠️ : si le build est instable (par exemple des warnings), j’envoie aussi une notification Discord pour signaler le problème.
-
-Pour chaque cas, je génère un fichier payload.json avec le contenu au format attendu par l’API Discord, je l’envoie via curl avec mon webhook, puis je supprime le fichier.
-
-Ça me permet d’avoir un suivi automatique de mes pipelines directement dans Discord, sans devoir aller consulter Jenkins à chaque fois.
-
-l'image des pipelines depuis discord : 
-![Discord](images/discord.png)
-
-
-pour le coverage : 
-
-j'ai installé le plugin COVERAGE API
-J'ai changé le fichier package json
-qui contenait : 
-"jest": {
-    "reporters": [
-      "default",
-      [
-        "jest-junit",
-        {
-          "outputDirectory": "tests",
-          "outputName": "junit.xml"
-        }
-      ]
-    ]
-  }
-  
-pour y placer ce code : 
-"jest": {
-  "collectCoverage": true,
-  "coverageDirectory": "coverage",
-  "coverageReporters": ["text","cobertura"],
-  "rootDir": ".",
-  "reporters": [
-    "default",
-    ["jest-junit", {"outputDirectory": "/tmp/tests", "outputName": "junit.xml"}]
-  ]
-}
-
-🎯 Problème rencontré
-
-Dans ma pipeline Jenkins, j’avais configuré publishCoverage avec des seuils comme ceci :
-
-publishCoverage adapters: [
-    coberturaAdapter('coverage/cobertura-coverage.xml')
-],
-failNoReports: true,
-globalThresholds: [
-    [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
-    [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
-]
-
-
-Le plugin code-coverage-api a essayé de comparer mon rapport de couverture avec ces seuils (par exemple, “au moins 80% des lignes doivent être couvertes”).
-Mais dans mon fichier Cobertura (cobertura-coverage.xml), certaines métriques n’étaient pas présentes (par ex. CLASS ou METHOD). Résultat : le plugin a tenté d’appliquer un seuil sur une valeur inexistante → j’ai eu une NullPointerException.
-
-✅ Solution que j’ai appliquée
-
-J’ai supprimé la section globalThresholds :
-
+#### Solution appliquée
+J’ai **supprimé la section `globalThresholds`** pour éviter les erreurs :
+```groovy
 publishCoverage adapters: [
     coberturaAdapter('coverage/cobertura-coverage.xml')
 ],
 failNoReports: true
+```
+Désormais, Jenkins :
+- Analyse le rapport de couverture.
+- L’affiche dans l’interface **sans validation bloquante**.
 
+**Vue du rapport dans Jenkins** :
+![Rapport de couverture](images/jenkins_rapport.png)
 
-Désormais, Jenkins se contente de :
+---
 
-analyser mon fichier de couverture,
-
-l’afficher dans l’interface,
-
-sans validation bloquante sur des seuils inexistants.
-
-📌 Ce que je note pour mon README
-
-Lors de la configuration de la couverture de code dans Jenkins :
-
-J’utilise le plugin publishCoverage pour publier les rapports générés par Jest au format Cobertura.
-
-Initialement, j’avais défini des seuils (globalThresholds) pour valider un certain niveau de couverture.
-
-Ces seuils ont provoqué une erreur (NullPointerException) car Jest ne génère pas toutes les métriques attendues.
-
-
-voici la vue depuis l'interface jenkins concernant le rapport:
-![jenkins_rapport](images/jenkins_rapport.png)
-
-
-
-voici le code pour l'ajout d'une step d'artefact : 
+### Archivage des artefacts
+J’ai ajouté une étape pour archiver les artefacts :
+```groovy
 stage('Archive Artifacts') {
     steps {
         echo 'Archivage des artefacts...'
         archiveArtifacts artifacts: 'coverage/**/*, tests/**/*, dist/**/*', allowEmptyArchive: true
     }
 }
+```
+**Résultat** :
+![Artefacts archivés](images/artefacts.png)
 
+---
 
-voici une vue depuis l'interface : 
-![artefacts](images/artefacts.png)
+## Questions de compréhension
+
+### 1. Différence entre `npm install` et `npm ci`
+- **`npm install`** :
+  Installe les dépendances en mettant à jour le `package-lock.json` si nécessaire. Utile en développement, mais moins adapté à la CI/CD car il peut introduire des variations entre les builds.
+- **`npm ci`** :
+  Installe **exactement** les versions spécifiées dans le `package-lock.json`. Plus rapide et plus fiable pour des **builds reproductibles** en CI/CD.
+
+### 2. Utilisation de `when` dans les étapes
+J’utilise `when` pour exécuter des étapes **conditionnellement** :
+- Exemple : Déployer uniquement sur les branches `main` ou `develop`.
+- Avantages : Évite des actions inutiles ou dangereuses sur d’autres branches.
+
+### 3. Gestion des erreurs avec les blocs `post`
+Les blocs `post` me permettent de :
+- **Envoyer des notifications** (Discord, email, etc.) selon le résultat du pipeline (`success`, `failure`, `unstable`).
+- **Exécuter des actions correctives** (ex : nettoyage, rollback).
+
+### 4. Intérêt du backup avant déploiement
+Avant de déployer une nouvelle version, je sauvegarde l’ancienne. En cas d’échec ou de bug, je peux **restaurer rapidement** l’application à son état précédent.
+
+---
+
+## Améliorations possibles
+
+### Sécurité
+- Intégrer **`npm audit`** ou des outils comme **Snyk** pour scanner automatiquement les vulnérabilités des dépendances.
+
+### Performance
+- **Mettre en cache** `node_modules` ou les artefacts intermédiaires pour réduire les temps de build.
+
+### Monitoring
+- Ajouter un **health check automatisé** après le déploiement.
+- Utiliser **Prometheus/Grafana** pour surveiller l’état de l’application en temps réel.
+
+### Rollback
+- Mettre en place un **mécanisme de rollback automatique** si le déploiement échoue ou si le health check détecte un problème.
+
+---
+
+## Bilan
+Ce TP m’a permis de :
+✅ Configurer une pipeline CI/CD complète avec Jenkins et Node.js.
+✅ Gérer les tests, la couverture de code, et les notifications.
+✅ Automatiser des actions post-build (archivage, notifications, backup).
+✅ Identifier des axes d’amélioration pour la sécurité, la performance et la fiabilité.
+
+---
+**Prochaines étapes** :
+- Automatiser davantage les tests de sécurité.
+- Optimiser les temps de build avec du caching.
+- Implémenter un système de rollback intelligent.
