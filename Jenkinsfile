@@ -40,28 +40,29 @@ pipeline {
         }
 
 
-       stage('Generate Coverage Report') {
-    steps {
-        echo 'Génération du rapport de couverture Cobertura...'
-        dir('/var/jenkins_home/projects/mon-app-js') {
-            sh '''
-                npm test -- --coverage
-                echo "Liste des fichiers coverage/"
-                ls -la coverage/
-                if [ ! -f coverage/cobertura-coverage.xml ]; then
-                    echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
-                    exit 1
-                fi
-            '''
+      stage('Generate Coverage Report') {
+            steps {
+                echo 'Génération du rapport de couverture Cobertura...'
+                dir("${env.WORKSPACE}") {
+                    sh '''
+                        npm test -- --coverage
+                        echo "Liste des fichiers coverage/"
+                        ls -la coverage/
+                        if [ ! -f coverage/cobertura-coverage.xml ]; then
+                            echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
+                            exit 1
+                        fi
+                    '''
+                }
+            }
         }
-    }
-}
+
 
 stage('Code Coverage') {
     steps {
         echo 'Analyse de la couverture de code...'
         publishCoverage adapters: [
-            coberturaAdapter('/var/jenkins_home/projects/mon-app-js/coverage/cobertura-coverage.xml')
+            coberturaAdapter("${env.WORKSPACE}/coverage/cobertura-coverage.xml")
         ],
         failNoReports: true,
         globalThresholds: [
@@ -71,11 +72,7 @@ stage('Code Coverage') {
     }
 }
 
-
-
-
-
-        
+ 
         stage('Code Quality Check') {
             steps {
                 echo 'Vérification de la qualité du code...'
