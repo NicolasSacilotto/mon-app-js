@@ -45,7 +45,7 @@ pipeline {
                 echo 'Génération du rapport de couverture Cobertura...'
                 dir("${env.WORKSPACE}") {
                     sh '''
-                        npm test -- --coverage
+                        npx jest --coverage --coverageReporters=cobertura
                         echo "Liste des fichiers coverage/"
                         ls -la coverage/
                         if [ ! -f coverage/cobertura-coverage.xml ]; then
