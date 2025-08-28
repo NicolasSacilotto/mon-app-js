@@ -19,18 +19,22 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Installation des dépendances Node.js...'
-                sh '''
-                    node --version
-                    npm --version
-                    npm ci
-                '''
+                dir('/root') {
+                    sh '''
+                        node --version
+                        npm --version
+                        npm ci
+                    '''
+                }
             }
         }
         
         stage('Run Tests') {
             steps {
                 echo 'Exécution des tests...'
-                sh 'npm test'
+                dir('/root') {
+                    sh 'npm test'
+                }
             }
             post {
                 always {
@@ -39,40 +43,37 @@ pipeline {
             }
         }
 
-
-       stage('Generate Coverage Report') {
-        steps {
-            echo 'Génération du rapport de couverture Cobertura...'
-            sh '''
-                npm test -- --coverage
-                echo "Liste des fichiers coverage/"
-                ls -la coverage/
-                if [ ! -f coverage/cobertura-coverage.xml ]; then
-                    echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
-                    exit 1
-                fi
-            '''
+        stage('Generate Coverage Report') {
+            steps {
+                echo 'Génération du rapport de couverture Cobertura...'
+                dir('/root') {
+                    sh '''
+                        npm test -- --coverage
+                        echo "Liste des fichiers coverage/"
+                        ls -la coverage/
+                        if [ ! -f coverage/cobertura-coverage.xml ]; then
+                            echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
+                            exit 1
+                        fi
+                    '''
+                }
+            }
         }
-    }
 
-    stage('Code Coverage') {
-        steps {
-            echo 'Analyse de la couverture de code...'
-            publishCoverage adapters: [
-                coberturaAdapter('coverage/cobertura-coverage.xml')
-            ],
-            failNoReports: true,
-            globalThresholds: [
-                [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
-                [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
-            ]
+        stage('Code Coverage') {
+            steps {
+                echo 'Analyse de la couverture de code...'
+                publishCoverage adapters: [
+                    coberturaAdapter('/root/coverage/cobertura-coverage.xml')
+                ],
+                failNoReports: true,
+                globalThresholds: [
+                    [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
+                    [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
+                ]
+            }
         }
-    }
 
-
-
-
-        
         stage('Code Quality Check') {
             steps {
                 echo 'Vérification de la qualité du code...'
@@ -84,7 +85,6 @@ pipeline {
             }
         }
 
-        
         stage('Build') {
             steps {
                 echo 'Construction de l\'application...'
@@ -94,7 +94,7 @@ pipeline {
                 '''
             }
         }
-        
+
         stage('Security Scan') {
             steps {
                 echo 'Analyse de sécurité...'
@@ -104,7 +104,7 @@ pipeline {
                 '''
             }
         }
-        
+
         stage('Deploy to Staging') {
             when {
                 branch 'develop'
@@ -112,13 +112,12 @@ pipeline {
             steps {
                 echo 'Déploiement vers l\'environnement de staging...'
                 sh '''
-                    echo "Déploiement staging simulé"
                     mkdir -p staging
                     cp -r dist/* staging/
                 '''
             }
         }
-        
+
         stage('Deploy to Production') {
             when {
                 branch 'main'
@@ -126,21 +125,16 @@ pipeline {
             steps {
                 echo 'Déploiement vers la production...'
                 sh '''
-                    echo "Sauvegarde de la version précédente..."
                     if [ -d "${DEPLOY_DIR}" ]; then
                         cp -r ${DEPLOY_DIR} ${DEPLOY_DIR}_backup_$(date +%Y%m%d_%H%M%S)
                     fi
-                    
-                    echo "Déploiement de la nouvelle version..."
                     mkdir -p ${DEPLOY_DIR}
                     cp -r dist/* ${DEPLOY_DIR}/
-                    
-                    echo "Vérification du déploiement..."
                     ls -la ${DEPLOY_DIR}
                 '''
             }
         }
-        
+
         stage('Health Check') {
             steps {
                 echo 'Vérification de santé de l\'application...'
@@ -148,7 +142,6 @@ pipeline {
                     try {
                         sh '''
                             echo "Test de connectivité..."
-                            # Simulation d'un health check
                             echo "Application déployée avec succès"
                         '''
                     } catch (Exception e) {
@@ -159,6 +152,7 @@ pipeline {
             }
         }
     }
+
     post {
         success {
             echo 'Pipeline exécuté avec succès!'
@@ -167,17 +161,17 @@ pipeline {
                     export LANG=C.UTF-8
                     export LC_ALL=C.UTF-8
                     cat > payload.json <<EOF
+{
+  "embeds": [
     {
-    "embeds": [
-        {
-        "title": "Succes: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-        "description": "Le deploy de ${env.JOB_NAME} fonctionne.\\nBranch: ${env.BRANCH_NAME}",
-        "color": 3066993,
-        "url": "${env.BUILD_URL}"
-        }
-    ]
+      "title": "✅ Succès: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Le deploy de ${env.JOB_NAME} fonctionne.\\nBranch: ${env.BRANCH_NAME}",
+      "color": 3066993,
+      "url": "${env.BUILD_URL}"
     }
-    EOF
+  ]
+}
+EOF
                     curl -H 'Content-Type: application/json; charset=utf-8' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
                     rm payload.json
                 """
@@ -185,23 +179,23 @@ pipeline {
         }
 
         failure {
-            echo 'Le pipeline est en echec!'
+            echo 'Le pipeline est en échec!'
             script {
                 sh """
                     export LANG=C.UTF-8
                     export LC_ALL=C.UTF-8
                     cat > payload.json <<EOF
+{
+  "embeds": [
     {
-    "embeds": [
-        {
-        "title": "Échec: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-        "description": "Le deploy de ${env.JOB_NAME} ne fonctionne pas.\\nBranch: ${env.BRANCH_NAME}",
-        "color": 15158332,
-        "url": "${env.BUILD_URL}"
-        }
-    ]
+      "title": "❌ Échec: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Le deploy de ${env.JOB_NAME} ne fonctionne pas.\\nBranch: ${env.BRANCH_NAME}",
+      "color": 15158332,
+      "url": "${env.BUILD_URL}"
     }
-    EOF
+  ]
+}
+EOF
                     curl -H 'Content-Type: application/json; charset=utf-8' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
                     rm payload.json
                 """
@@ -215,22 +209,21 @@ pipeline {
                     export LANG=C.UTF-8
                     export LC_ALL=C.UTF-8
                     cat > payload.json <<EOF
+{
+  "embeds": [
     {
-    "embeds": [
-        {
-        "title": "Instable: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-        "description": "Avertissements dans ${env.JOB_NAME}.\\nBranch: ${env.BRANCH_NAME}",
-        "color": 16776960,
-        "url": "${env.BUILD_URL}"
-        }
-    ]
+      "title": "⚠️ Instable: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Avertissements dans ${env.JOB_NAME}.\\nBranch: ${env.BRANCH_NAME}",
+      "color": 16776960,
+      "url": "${env.BUILD_URL}"
     }
-    EOF
+  ]
+}
+EOF
                     curl -H 'Content-Type: application/json; charset=utf-8' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
                     rm payload.json
                 """
             }
         }
     }
-
 }
