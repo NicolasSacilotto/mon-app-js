@@ -44,6 +44,7 @@ pipeline {
             steps {
                 echo 'Génération du rapport de couverture Cobertura...'
                 sh '''
+                    pwd
                     npx jest --coverage --coverageReporters=cobertura
                     if [ ! -f coverage/cobertura-coverage.xml ]; then
                         echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
@@ -57,7 +58,6 @@ pipeline {
 
         stage('Code Coverage') {
             steps {
-                pwd
                 echo 'Analyse de la couverture de code...'
                 publishCoverage adapters: [
                     coberturaAdapter('coverage/cobertura-coverage.xml')
