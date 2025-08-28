@@ -39,15 +39,15 @@ pipeline {
             }
         }
 
-        stage('Prepare Workspace') {
+       stage('Prepare Workspace') {
     steps {
         sh '''
-            mkdir -p /jenkins_rs/mon-app-js/@tmp
-            chown -R 1000:1000 /jenkins_rs/mon-app-js
-            chmod -R 775 /jenkins_rs/mon-app-js
+            mkdir -p /tmp/jenkins-mon-app-js/@tmp
+            chmod 775 /tmp/jenkins-mon-app-js/@tmp
         '''
     }
 }
+
 
 stage('Check Permissions') {
     steps {
