@@ -43,7 +43,7 @@ pipeline {
             steps {
                 echo 'Analyse de la couverture de code...'
                 publishCoverage adapters: [
-                    cobertura(path: 'coverage/cobertura-coverage.xml')
+                    coberturaAdapter('coverage/cobertura-coverage.xml')
                 ],
                 failNoReports: true,
                 globalThresholds: [
@@ -52,6 +52,7 @@ pipeline {
                 ]
             }
         }
+
 
         
         stage('Code Quality Check') {

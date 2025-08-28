@@ -26,12 +26,8 @@
       }
     ]
   ],
-  "coverageDirectory": "coverage",
   "collectCoverage": true,
-  "coverageReporters": [
-    "text",
-    "cobertura",
-    "lcov"
-  ]
+  "coverageDirectory": "coverage",
+  "coverageReporters": ["text", "cobertura"]
 }
 }
