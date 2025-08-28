@@ -124,30 +124,78 @@ pipeline {
             }
         }
     }
-    post {
+post {
+    always {
+        echo 'Nettoyage des ressources temporaires...'
+        sh '''
+            rm -rf node_modules/.cache
+            rm -rf staging
+        '''
+    }
+
     success {
         echo 'Pipeline exécuté avec succès!'
         script {
             sh """
-                curl -H 'Content-Type: application/json' -X POST -d '{"embeds":[{"title":"Succès: ${env.JOB_NAME} #${env.BUILD_NUMBER}","description":"Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\\nBranch: ${env.BRANCH_NAME}","color":3066993,"url":"${env.BUILD_URL}"}]}' ${env.DISCORD_WEBHOOK}
+                cat > payload.json <<EOF
+{
+  "embeds": [
+    {
+      "title": "✅ Succès: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Le déploiement de ${env.JOB_NAME} s'est terminé avec succès.\\nBranch: ${env.BRANCH_NAME}",
+      "color": 3066993,
+      "url": "${env.BUILD_URL}"
+    }
+  ]
+}
+EOF
+                curl -H 'Content-Type: application/json' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
+                rm payload.json
             """
         }
     }
+
     failure {
         echo 'Le pipeline a échoué!'
         script {
             sh """
-                curl -H 'Content-Type: application/json' -X POST -d '{"embeds":[{"title":"Échec: ${env.JOB_NAME} #${env.BUILD_NUMBER}","description":"Le déploiement de ${env.JOB_NAME} a échoué.\\nBranch: ${env.BRANCH_NAME}","color":15158332,"url":"${env.BUILD_URL}"}]}' ${env.DISCORD_WEBHOOK}
+                cat > payload.json <<EOF
+{
+  "embeds": [
+    {
+      "title": "❌ Échec: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Le déploiement de ${env.JOB_NAME} a échoué.\\nBranch: ${env.BRANCH_NAME}",
+      "color": 15158332,
+      "url": "${env.BUILD_URL}"
+    }
+  ]
+}
+EOF
+                curl -H 'Content-Type: application/json' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
+                rm payload.json
             """
         }
     }
+
     unstable {
         echo 'Build instable - des avertissements ont été détectés'
         script {
             sh """
-                curl -H 'Content-Type: application/json' -X POST -d '{"embeds":[{"title":"Instable: ${env.JOB_NAME} #${env.BUILD_NUMBER}","description":"Des avertissements ont été détectés dans ${env.JOB_NAME}.\\nBranch: ${env.BRANCH_NAME}","color":16776960,"url":"${env.BUILD_URL}"}]}' ${env.DISCORD_WEBHOOK}
+                cat > payload.json <<EOF
+{
+  "embeds": [
+    {
+      "title": "⚠️ Instable: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      "description": "Des avertissements ont été détectés dans ${env.JOB_NAME}.\\nBranch: ${env.BRANCH_NAME}",
+      "color": 16776960,
+      "url": "${env.BUILD_URL}"
+    }
+  ]
+}
+EOF
+                curl -H 'Content-Type: application/json' -X POST -d @payload.json ${env.DISCORD_WEBHOOK}
+                rm payload.json
             """
         }
     }
-  }
 }
