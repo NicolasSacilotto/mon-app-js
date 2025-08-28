@@ -6,14 +6,14 @@ pipeline {
         APP_NAME = 'mon-app-js'
         DEPLOY_DIR = '/var/www/html/mon-app'
         DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1410545158226841653/3qNd98Usims2t5s6MO0dmE5EAX0S7whevJrgWWjhM-BOi2j-vUbePHuh75bGgoHjAgtZ'
-        TMPDIR = '/jenkins_rs/mon-app-js/tmp'
+        
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                echo 'Récupération du code source...'
-                checkout scm
+        stages {
+            stage('Checkout') {
+                steps {
+                    echo 'Récupération du code source...'
+                    checkout scm
             }
         }
         
@@ -39,12 +39,11 @@ pipeline {
                 }
             }
         }
- stage('Generate Coverage Report') {
+        stage('Generate Coverage Report') {
             steps {
                 dir('/jenkins_rs/mon-app-js') {
                     sh '''
-                        pwd
-                        echo "TMPDIR=$TMPDIR"
+                        whoami
                         npx jest --coverage --coverageReporters=cobertura
                         ls -la coverage/
                         if [ ! -f coverage/cobertura-coverage.xml ]; then
