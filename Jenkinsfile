@@ -6,6 +6,7 @@ pipeline {
         APP_NAME = 'mon-app-js'
         DEPLOY_DIR = '/var/www/html/mon-app'
         DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1410545158226841653/3qNd98Usims2t5s6MO0dmE5EAX0S7whevJrgWWjhM-BOi2j-vUbePHuh75bGgoHjAgtZ'
+        TMPDIR = '/tmp/jenkins_tmp'
     }
 
     stages {
@@ -38,63 +39,38 @@ pipeline {
                 }
             }
         }
+ stage('Generate Coverage Report') {
+            steps {
+                dir('/jenkins_rs/mon-app-js') {
+                    sh '''
+                        pwd
+                        echo "TMPDIR=$TMPDIR"
+                        npx jest --coverage --coverageReporters=cobertura
+                        ls -la coverage/
+                        if [ ! -f coverage/cobertura-coverage.xml ]; then
+                            echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
+                            exit 1
+                        fi
+                    '''
+                }
+            }
+        }
 
-       stage('Prepare Workspace') {
-    steps {
-        sh '''
-            mkdir -p /tmp/jenkins-mon-app-js/@tmp
-            chmod 775 /tmp/jenkins-mon-app-js/@tmp
-        '''
-    }
-}
-
-
-stage('Check Permissions') {
-    steps {
-        sh '''
-            ls 
-            whoami
-            ls -ld /jenkins_rs/mon-app-js
-            ls -ld /jenkins_rs/mon-app-js/@tmp
-        '''
-    }
-}
-
-
-
-    stage('Generate Coverage Report') {
-    steps {
-        echo 'Génération du rapport de couverture Cobertura...'
-        dir('/jenkins_rs/mon-app-js') { // S'assurer qu'on est dans le bon dossier
-            sh '''
-                pwd
-                npx jest --coverage --coverageReporters=cobertura
-                echo "Liste des fichiers coverage/"
-                ls -la coverage/
-                if [ ! -f coverage/cobertura-coverage.xml ]; then
-                    echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
-                    exit 1
-                fi
-            '''
+        stage('Code Coverage') {
+            steps {
+                dir('/jenkins_rs/mon-app-js') {
+                    publishCoverage adapters: [
+                        coberturaAdapter('coverage/cobertura-coverage.xml')
+                    ],
+                    failNoReports: true,
+                    globalThresholds: [
+                        [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
+                        [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
+                    ]
+                }
+            }
         }
     }
-}
-
-stage('Code Coverage') {
-    steps {
-        echo 'Analyse de la couverture de code...'
-        dir('/jenkins_rs/mon-app-js') { // S'assurer qu'on est dans le bon dossier
-            publishCoverage adapters: [
-                coberturaAdapter('coverage/cobertura-coverage.xml') // chemin relatif au workspace
-            ],
-            failNoReports: true,
-            globalThresholds: [
-                [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
-                [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
-            ]
-        }
-    }
-}
 
 
 
