@@ -1,3 +1,19 @@
+def sendDiscordMessage(String status, String color, String message) {
+        sh """
+            curl -H "Content-Type: application/json" \
+                -X POST \
+                -d '{
+                    "embeds": [{
+                        "title": "${status}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        "description": "${message}",
+                        "color": ${color},
+                        "url": "${env.BUILD_URL}"
+                    }]
+                    }' \
+                ${env.DISCORD_WEBHOOK}
+        """
+    }
+
 pipeline {
     agent any
     
@@ -125,6 +141,8 @@ pipeline {
         }
     }
 
+    
+
     post {
         always {
             echo 'Nettoyage des ressources temporaires...'
@@ -178,18 +196,4 @@ pipeline {
     }
 }
 
-def sendDiscordMessage(String status, String color, String message) {
-    sh """
-        curl -H "Content-Type: application/json" \
-             -X POST \
-             -d '{
-                   "embeds": [{
-                     "title": "${status}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                     "description": "${message}",
-                     "color": ${color},
-                     "url": "${env.BUILD_URL}"
-                   }]
-                 }' \
-             ${env.DISCORD_WEBHOOK}
-    """
-}
+
