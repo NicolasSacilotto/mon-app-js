@@ -64,3 +64,53 @@ Pour chaque cas, je génère un fichier payload.json avec le contenu au format a
 
 l'image des pipelines depuis discord : 
 ![Discord](images/discord.png)
+
+
+pour le coverage : 
+
+j'ai installé le plugin COVERAGE API
+
+🎯 Problème rencontré
+
+Dans ma pipeline Jenkins, j’avais configuré publishCoverage avec des seuils comme ceci :
+
+publishCoverage adapters: [
+    coberturaAdapter('coverage/cobertura-coverage.xml')
+],
+failNoReports: true,
+globalThresholds: [
+    [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
+    [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
+]
+
+
+Le plugin code-coverage-api a essayé de comparer mon rapport de couverture avec ces seuils (par exemple, “au moins 80% des lignes doivent être couvertes”).
+Mais dans mon fichier Cobertura (cobertura-coverage.xml), certaines métriques n’étaient pas présentes (par ex. CLASS ou METHOD). Résultat : le plugin a tenté d’appliquer un seuil sur une valeur inexistante → j’ai eu une NullPointerException.
+
+✅ Solution que j’ai appliquée
+
+J’ai supprimé la section globalThresholds :
+
+publishCoverage adapters: [
+    coberturaAdapter('coverage/cobertura-coverage.xml')
+],
+failNoReports: true
+
+
+Désormais, Jenkins se contente de :
+
+analyser mon fichier de couverture,
+
+l’afficher dans l’interface,
+
+sans validation bloquante sur des seuils inexistants.
+
+📌 Ce que je note pour mon README
+
+Lors de la configuration de la couverture de code dans Jenkins :
+
+J’utilise le plugin publishCoverage pour publier les rapports générés par Jest au format Cobertura.
+
+Initialement, j’avais défini des seuils (globalThresholds) pour valider un certain niveau de couverture.
+
+Ces seuils ont provoqué une erreur (NullPointerException) car Jest ne génère pas toutes les métriques attendues.
