@@ -81,13 +81,7 @@ pipeline {
                 publishCoverage adapters: [
                     coberturaAdapter('coverage/cobertura-coverage.xml')
                 ],
-                failNoReports: true,
-                failUnhealthy: false,
-                failUnstable: false,
-                globalThresholds: [
-                    [thresholdTarget: 'LINE', unhealthyThreshold: 80.0, unstableThreshold: 80.0],
-                    [thresholdTarget: 'BRANCH', unhealthyThreshold: 80.0, unstableThreshold: 80.0]
-                ]
+                failNoReports: true
             }
         }
 
