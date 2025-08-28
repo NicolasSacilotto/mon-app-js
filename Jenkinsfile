@@ -40,35 +40,40 @@ pipeline {
         }
 
 
-      stage('Generate Coverage Report') {
-            steps {
-                echo 'Génération du rapport de couverture Cobertura...'
-                sh '''
-                    pwd
-                    npx jest --coverage --coverageReporters=cobertura
-                    if [ ! -f coverage/cobertura-coverage.xml ]; then
-                        echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
-                        exit 1
-                    fi
-                '''
-            }
+    stage('Generate Coverage Report') {
+    steps {
+        echo 'Génération du rapport de couverture Cobertura...'
+        dir('/jenkins_rs/mon-app-js') { // S'assurer qu'on est dans le bon dossier
+            sh '''
+                pwd
+                npx jest --coverage --coverageReporters=cobertura
+                echo "Liste des fichiers coverage/"
+                ls -la coverage/
+                if [ ! -f coverage/cobertura-coverage.xml ]; then
+                    echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
+                    exit 1
+                fi
+            '''
         }
-
-
-
-        stage('Code Coverage') {
-            steps {
-                echo 'Analyse de la couverture de code...'
-                publishCoverage adapters: [
-                    coberturaAdapter('coverage/cobertura-coverage.xml')
-                ],
-                failNoReports: true,
-                globalThresholds: [
-                    [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
-                    [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
-                ]
-            }
+    }
 }
+
+stage('Code Coverage') {
+    steps {
+        echo 'Analyse de la couverture de code...'
+        dir('/jenkins_rs/mon-app-js') { // S'assurer qu'on est dans le bon dossier
+            publishCoverage adapters: [
+                coberturaAdapter('coverage/cobertura-coverage.xml') // chemin relatif au workspace
+            ],
+            failNoReports: true,
+            globalThresholds: [
+                [thresholdTarget: 'LINE', unhealthyThreshold: 70.0, unstableThreshold: 80.0],
+                [thresholdTarget: 'BRANCH', unhealthyThreshold: 60.0, unstableThreshold: 70.0]
+            ]
+        }
+    }
+}
+
 
 
  
