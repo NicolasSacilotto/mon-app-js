@@ -59,7 +59,7 @@ pipeline {
             steps {
                 dir('/jenkins_rs/mon-app-js') {
                     sh '''
-                        npx jest --coverage --coverageReporters=cobertura 
+                        npm test -- --coverageReporters=cobertura
                         ls -la coverage/
                         if [ ! -f coverage/cobertura-coverage.xml ]; then
                             echo "ERREUR : coverage/cobertura-coverage.xml introuvable"
