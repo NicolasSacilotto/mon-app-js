@@ -168,7 +168,7 @@ pipeline {
     post {
         always {
             slackSend(
-                channel: '#general',
+                channel: '#jenkins-notifications',
                 color: 'good',
                 message: "Test Jenkins - Build ${env.BUILD_NUMBER}"
             )
