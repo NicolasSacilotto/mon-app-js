@@ -155,6 +155,12 @@ pipeline {
                 sh 'echo "Application déployée avec succès"'
             }
         }
+
+        stage('Check jest-junit') {
+            steps {
+                sh 'ls -la node_modules/jest-junit || echo "jest-junit non trouvé"'
+            }
+        }
     }
 
     post {
