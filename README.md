@@ -190,3 +190,22 @@ Ce TP m’a permis de :
 - Automatiser davantage les tests de sécurité.
 - Optimiser les temps de build avec du caching.
 - Implémenter un système de rollback intelligent.
+
+---
+
+## Intégration Gitea
+
+### Ce qui a été fait :
+
+- Migration du projet depuis GitHub vers un dépôt Gitea auto-hébergé.
+- Installation et configuration du plugin Gitea sur Jenkins.
+- Ajout du dépôt Gitea comme source SCM dans Jenkins (multibranch pipeline).
+- Aucune modification du code source nécessaire, seule la configuration Jenkins a été adaptée.
+
+### Avantages de Gitea :
+- Dépôt Git auto-hébergé, simple à administrer.
+- Intégration native avec Jenkins via plugin dédié.
+- Contrôle total sur les accès et la confidentialité du code.
+
+### Lien du dépôt Gitea :
+`https://<ton-gitea>/user/mon-app-js.git`
