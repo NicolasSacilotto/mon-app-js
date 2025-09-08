@@ -165,15 +165,6 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            slackSend(
-                channel: '#jenkins-notifications',
-                color: 'good',
-                message: "Test Jenkins - Build ${env.BUILD_NUMBER}"
-            )
-        }
-    }
 
     post {
         success {
@@ -219,6 +210,14 @@ EOF
                     rm payload.json
                 """
             }
+        }
+
+        always {
+            slackSend(
+                channel: '#jenkins-notifications',
+                color: 'good',
+                message: "Test Jenkins - Build ${env.BUILD_NUMBER}"
+            )
         }
     }
 }
