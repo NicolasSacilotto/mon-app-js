@@ -1,8 +1,4 @@
-Voici une version uniformisée et structurée de votre `README.md`, rédigée à la première personne et avec une mise en forme claire pour chaque section :
 
----
-
-```markdown
 # TP Node.js/Jenkins : Intégration Continue et Déploiement
 
 ## Contexte
