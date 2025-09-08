@@ -16,12 +16,21 @@
     "jest-junit": "^16.0.0"
   },
   "jest": {
-  "collectCoverage": true,
-  "coverageDirectory": "coverage",
-  "coverageReporters": ["text","cobertura"],
-  "reporters": [
-    "default",
-    ["jest-junit", {"outputDirectory": "/tmp/tests", "outputName": "junit.xml"}]
-  ]
-}
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "/tmp/tests",
+          "outputName": "junit.xml"
+        }
+      ]
+    ]
+  }
 }

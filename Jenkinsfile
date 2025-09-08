@@ -38,7 +38,6 @@ pipeline {
                     node --version
                     npm --version
                     npm ci
-                    npm install --save-dev jest-junit
                 '''
             }
         }
