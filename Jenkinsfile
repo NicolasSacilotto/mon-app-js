@@ -156,28 +156,24 @@ pipeline {
             }
         }
 
-        pipeline {
-            agent any
-            
-            stages {
-                stage('Test') {
-                    steps {
-                        echo 'Test du pipeline'
-                    }
-                }
-            }
-            
-            post {
-                always {
-                    slackSend(
-                        channel: '#general',
-                        color: 'good',
-                        message: "Test Jenkins - Build ${env.BUILD_NUMBER}"
-                    )
-                }
+        
+
+        stage('Check jest-junit') {
+            steps {
+                sh 'ls -la node_modules/jest-junit || echo "jest-junit non trouvé"'
             }
         }
+    }
 
+    post {
+        always {
+            slackSend(
+                channel: '#general',
+                color: 'good',
+                message: "Test Jenkins - Build ${env.BUILD_NUMBER}"
+            )
+        }
+    }
 
     post {
         success {
