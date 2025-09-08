@@ -10,6 +10,11 @@ pipeline {
     }
 
     stages {
+        stage('Gitea Webhook Info') {
+            steps {
+                echo "Build déclenché par le webhook Gitea. Webhook Discord utilisé : ${env.DISCORD_WEBHOOK}"
+            }
+        }
         stage('Start of Pipeline') {
             steps {
                 sh '''
