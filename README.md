@@ -208,4 +208,4 @@ Ce TP m’a permis de :
 - Contrôle total sur les accès et la confidentialité du code.
 
 ### Lien du dépôt Gitea :
-`https://<ton-gitea>/user/mon-app-js.git`
+`https://gitea.com/EternalNico/mon-app-js.git`
