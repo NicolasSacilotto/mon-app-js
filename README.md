@@ -191,21 +191,192 @@ Ce TP m’a permis de :
 - Optimiser les temps de build avec du caching.
 - Implémenter un système de rollback intelligent.
 
+
 ---
 
-## Intégration Gitea
+## Annexes : Configuration des plugins Jenkins (Blue Ocean, Slack, Gitea)
 
-### Ce qui a été fait :
+### Partie 1 : Installation des plugins
+**Étape 1 : Installation via l'interface Jenkins**
+J'ai ouvert Jenkins (http://localhost:8080), puis je suis allé dans "Manage Jenkins" → "Manage Plugins". Dans l'onglet "Available", j'ai recherché et installé :
+  - Blue Ocean
+  - Slack Notification Plugin
+  - Gitea Plugin (ou Git Plugin)
+J'ai cliqué sur "Install without restart" et attendu la fin de l'installation.
 
-- Migration du projet depuis GitHub vers un dépôt Gitea auto-hébergé.
-- Installation et configuration du plugin Gitea sur Jenkins.
-- Ajout du dépôt Gitea comme source SCM dans Jenkins (multibranch pipeline).
-- Aucune modification du code source nécessaire, seule la configuration Jenkins a été adaptée.
+**Étape 2 : Vérification de l'installation**
+Je suis retourné au tableau de bord Jenkins, j'ai vérifié la présence du bouton "Open Blue Ocean" et la présence des sections Slack et Gitea dans "Manage Jenkins" → "Configure System".
 
-### Avantages de Gitea :
-- Dépôt Git auto-hébergé, simple à administrer.
-- Intégration native avec Jenkins via plugin dédié.
-- Contrôle total sur les accès et la confidentialité du code.
+### Partie 2 : Configuration du plugin Blue Ocean
+**Qu'est-ce que Blue Ocean ?**
+Blue Ocean est une interface moderne pour Jenkins qui améliore la visualisation des pipelines.
 
-### Lien du dépôt Gitea :
-`https://gitea.com/EternalNico/mon-app-js.git`
+
+**Résultat** :
+![Blue ocean](images/blue_ocean1.png)
+
+
+
+**Configuration**
+J'ai cliqué sur "Open Blue Ocean" dans le menu Jenkins, puis j'ai exploré l'interface : vue des pipelines, éditeur visuel, historique des builds. Blue Ocean n'a pas nécessité de configuration supplémentaire.
+
+
+**Exercice 2.1** : J'ai créé un pipeline simple via Blue Ocean et j'ai observé la différence avec l'interface classique.
+
+
+**Résultat** :
+![Blue ocean 2](images/blue_ocean2.png)
+
+### Partie 3 : Configuration du plugin Slack
+**Étape 1 : Préparation de Slack**
+- Je suis allé sur https://api.slack.com/apps
+- J'ai créé une nouvelle app : "Create New App" → "From scratch"
+- J'ai nommé mon app : "Jenkins Notifications"
+- Dans "OAuth & Permissions", j'ai ajouté les permissions :
+  - chat:write
+  - chat:write.public
+
+**Étape 2 : Configuration dans Jenkins**
+- Je suis allé dans "Manage Jenkins" → "Configure System"
+- J'ai trouvé la section "Slack"
+- J'ai configuré :
+  - Workspace : nom de mon workspace Slack
+  - Credential : J'ai créé une nouvelle credential
+  - Kind : "Secret text"
+  - Secret : mon Bot User OAuth Token
+  - ID : "slack-token"
+  - Default channel : #general (ou j'ai créé un canal dédié)
+- J'ai testé la connexion
+
+
+**Étape 3 : Test des notifications**
+J'ai créé un job simple pour tester :
+
+```groovy
+pipeline {
+  agent any
+  stages {
+    stage('Test') {
+      steps {
+        echo 'Test du pipeline'
+      }
+    }
+  }
+  post {
+    always {
+      slackSend(
+  channel: '#jenkins-notifications',
+        color: 'good',
+        message: "Test Jenkins - Build ${env.BUILD_NUMBER}"
+      )
+    }
+  }
+}
+```
+
+
+**Exercice 3.1** : J'ai configuré les notifications Slack et j'ai testé avec un pipeline simple.
+
+
+**Connexion** :
+![Connexion Slack](images/connexion_slack.png)
+
+**Résultat** :
+![Slack notification](images/slack_notification.png)
+
+
+### Partie 4 : Configuration du plugin Gitea
+**Étape 1 : Configuration des credentials Git**
+- Je suis allé dans "Manage Jenkins" → "Manage Credentials"
+- J'ai ajouté une nouvelle credential :
+  - Kind : Username with password
+  - Username : mon nom d'utilisateur Git
+  - Password : mon mot de passe ou token
+  - ID : git-credentials
+
+**Étape 2 : Configuration des webhooks (optionnel)**
+Si j'ai utilisé Gitea :
+- Dans mon repository Gitea, je suis allé dans "Settings" → "Webhooks"
+- J'ai ajouté un webhook :
+  - URL : http://jenkins-url:8080/gitea-webhook/post
+  - Content Type : application/json
+  - Events : Push events
+
+**Étape 3 : Test avec un repository**
+- J'ai créé un job multibranch pipeline :
+  - "New Item" → "Multibranch Pipeline"
+  - J'ai configuré la source Git :
+    - Repository URL : URL de mon repository
+    - Credentials : j'ai sélectionné git-credentials
+  - J'ai sauvegardé
+
+**Exercice 4.1** : J'ai connecté un repository Git et j'ai configuré un pipeline automatique.
+
+
+**Résultat** :
+![Slack notification 2](images/slack_notification2.png)
+
+### Partie 5 : Pipeline intégré avec les trois plugins
+**Exemple de Jenkinsfile complet**
+
+```groovy
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        echo 'Récupération du code'
+        checkout scm
+      }
+    }
+    stage('Build') {
+      steps {
+        echo 'Construction de l\'application'
+        // Ajoutez vos commandes de build ici
+      }
+    }
+    stage('Test') {
+      steps {
+        echo 'Exécution des tests'
+        // Ajoutez vos commandes de test ici
+      }
+    }
+    stage('Deploy') {
+      when {
+        branch 'main'
+      }
+      steps {
+        echo 'Déploiement en production'
+        // Ajoutez vos commandes de déploiement ici
+      }
+    }
+  }
+  post {
+    success {
+      slackSend(
+        channel: '#general',
+        color: 'good',
+        message: """
+        Build réussi !\nProjet: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nBranche: ${env.BRANCH_NAME}"
+      )
+    }
+    failure {
+      slackSend(
+        channel: '#general',
+        color: 'danger',
+        message: """
+        Build échoué !\nProjet: ${env.JOB_NAME}\nBuild: ${env.BUILD_NUMBER}\nVoir: ${env.BUILD_URL}"
+      )
+    }
+  }
+}
+
+```
+**Test du pipeline intégré**
+J'ai créé un repository avec ce Jenkinsfile, configuré le job multibranch pipeline, puis fait un push pour déclencher le build. J'ai vérifié la visualisation dans Blue Ocean, les notifications Slack et l'intégration Git.
+
+**Exercice 5.1** : J'ai créé un pipeline complet utilisant les trois plugins et j'ai testé toutes les fonctionnalités.
+
+**Résultat** :
+![Blue ocean 3](images/blue_ocean3.png)
+
