@@ -37,7 +37,7 @@ pipeline {
     post {
         success {
             slackSend(
-                channel: '#general',
+                channel: '#jenkins-notifications',
                 color: 'good',
                 message: """
                 Build réussi !
@@ -50,7 +50,7 @@ pipeline {
         
         failure {
             slackSend(
-                channel: '#general',
+                channel: '#jenkins-notifications',
                 color: 'danger',
                 message: """
                 Build échoué !
