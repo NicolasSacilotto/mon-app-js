@@ -380,3 +380,23 @@ J'ai créé un repository avec ce Jenkinsfile, configuré le job multibranch pip
 **Résultat** :
 ![Blue ocean 3](images/blue_ocean3.png)
 
+
+### Partie 5 : Pipeline intégré avec les trois plugins
+
+Grâce à l’ajout du code fourni dans le TP, j’ai pu lancer des pipelines paramétrés : je peux choisir l’environnement de déploiement (dev, staging ou prod) et activer ou non l’option pour ignorer les tests avant le déploiement.
+
+Voici un test de lancement de pipeline avec paramètre comme le montre l'image ci-dessous : 
+
+**IHM Jenkins pipeline avec paramètres** :
+![Pipeline parameter](images/pipeline_parameter.png)
+
+**Résultat de la pipeline (avec "skip tests")** :
+![Pipeline parameter2](images/pipeline_parameter2.png)
+
+
+Voici le résultat sans la case cocher "skip test"
+
+**Résultat de la pipeline (sans "skip tests")** :
+![Pipeline parameter3](images/pipeline_parameter3.png)
+
+
